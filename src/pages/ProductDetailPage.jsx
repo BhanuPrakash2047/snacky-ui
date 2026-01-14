@@ -6,6 +6,7 @@ import { Header, Footer } from '@/components/layout';
 import { Button, Input, Card, Badge, Spinner, Modal } from '@/components/common';
 import { fetchProductById, fetchProductImages, fetchProductReviews, fetchFAQs, fetchProductVideos, addReview } from '@/store/thunks/productThunks';
 import { addToCart } from '@/store/thunks/cartThunks';
+import { ProductDetailPageSkeleton } from '@/components/skeletons';
 import { showToast } from '@/utils/toast';
 
 const ProductDetailPage = () => {
@@ -43,6 +44,10 @@ const ProductDetailPage = () => {
         .unwrap()
         .then(() => {
           setLoadingState(prev => ({ ...prev, product: false }));
+
+          if (loadingState.product) {
+            return <ProductDetailPageSkeleton />;
+          }
           
           // Step 2: After product loaded, fetch images
           setLoadingState(prev => ({ ...prev, images: true }));

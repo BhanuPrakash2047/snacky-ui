@@ -6,6 +6,7 @@ import { Package, ChevronRight, Search, Filter, Calendar, Truck, CheckCircle2, C
 import { Header, Footer } from '@/components/layout';
 import { Button, Card, Spinner, Badge, Input } from '@/components/common';
 import { fetchUserOrders } from '@/store/thunks/orderThunks';
+import { OrderHistoryPageSkeleton } from '@/components/skeletons';
 import { showToast } from '@/utils/toast';
 
 const OrderHistoryPage = () => {
@@ -54,6 +55,10 @@ const OrderHistoryPage = () => {
       setFilteredOrders(result);
     });
   }, [orders, searchTerm, filterStatus]);
+
+  if (loading) {
+    return <OrderHistoryPageSkeleton />;
+  }
 
   const getStatusColor = (status) => {
     const statusUpper = status?.toUpperCase();

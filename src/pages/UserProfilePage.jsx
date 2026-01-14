@@ -6,6 +6,7 @@ import { User, Mail, Phone, MapPin, LogOut, Lock, Upload, Eye, EyeOff } from 'lu
 import { Header, Footer } from '@/components/layout';
 import { Button, Input, Card, Modal } from '@/components/common';
 import { updateProfile, logoutUser, changePassword } from '@/store/thunks/authThunks';
+import { UserProfilePageSkeleton } from '@/components/skeletons';
 import { showToast } from '@/utils/toast';
 import { useFormValidation } from '@/hooks';
 
@@ -13,6 +14,10 @@ const UserProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, loading } = useSelector(state => state.auth);
+
+  if (loading) {
+    return <UserProfilePageSkeleton />;
+  }
 
   const { 
     formData: profileForm, 

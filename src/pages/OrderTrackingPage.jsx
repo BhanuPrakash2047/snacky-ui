@@ -6,6 +6,7 @@ import { MapPin, Truck, CheckCircle, Package, MoreVertical, Download, Phone, Mai
 import { Header, Footer } from '@/components/layout';
 import { Button, Card, Spinner, Badge } from '@/components/common';
 import { fetchOrderDetails } from '@/store/thunks/orderThunks';
+import { OrderTrackingPageSkeleton } from '@/components/skeletons';
 import { showToast } from '@/utils/toast';
 
 const OrderTrackingPage = () => {
@@ -28,10 +29,34 @@ const OrderTrackingPage = () => {
       dispatch(fetchOrderDetails(orderId))
         .unwrap()
         .catch(err => {
-          showToast(err || 'Failed to load order', 'error');
+          showToast('Failed to load tracking info', 'error');
+          navigate('/orders');
         });
     }
   }, [orderId, user, dispatch, navigate]);
+
+  if (loading) {
+    return <OrderTrackingPageSkeleton />;
+  }
+
+  if (!currentOrder) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 flex flex-col">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
+          <Card className="p-8 text-center max-w-md">
+            <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Order Not Found</h2>
+            <p className="text-slate-600 mb-6">The order you are looking for does not exist.</p>
+            <Button onClick={() => navigate('/orders')} variant="primary">
+              Back to Orders
+            </Button>
+          </Card>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   const handleDownloadInvoice = async () => {
     setDownloadingInvoice(true);

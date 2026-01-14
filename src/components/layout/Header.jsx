@@ -21,7 +21,6 @@ export const Header = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Fetch unread count on component mount
       dispatch(getUnreadNotificationCount());
     }
   }, [isAuthenticated, dispatch]);

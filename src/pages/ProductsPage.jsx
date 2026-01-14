@@ -4,6 +4,7 @@ import { Header, Footer } from '@/components/layout';
 import { ProductCard } from '@/components/features';
 import { Spinner } from '@/components/common';
 import { fetchAllProducts, fetchProductImages } from '@/store/thunks/productThunks';
+import { ProductsPageSkeleton } from '@/components/skeletons';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const ProductsPage = () => {
       image: imageUrl
     };
   });
+
+  if (loading) {
+    return <ProductsPageSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-emerald-50 overflow-hidden">

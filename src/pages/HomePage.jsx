@@ -7,6 +7,7 @@ import { ProductCard } from '@/components/features';
 import { Button } from '@/components/common';
 import { fetchAllProducts, fetchProductImages } from '@/store/thunks/productThunks';
 import { ToastContainer } from '@/components/common/Toast';
+import { ProductLoadingSkeleton } from '@/components/skeletons';
 import { Flame, TrendingUp, Gift, Zap, Star, ArrowRight, ChevronRight, Sparkles, Truck, Shield, Award } from 'lucide-react';
 
 export const HomePage = () => {
@@ -54,7 +55,6 @@ export const HomePage = () => {
       image: imageUrl
     };
   });
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-emerald-50 overflow-hidden">
@@ -240,43 +240,50 @@ export const HomePage = () => {
           </div>
 
           {/* All Products Grid with Enhanced Styling */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
-            {displayProducts.length > 0 ? (
-              displayProducts.map((product, idx) => (
-                <div 
-                  key={product.id} 
-                  className="group relative animate-bounce-in will-change-transform hover:-translate-y-3 transition-transform duration-300"
-                  style={{ animationDelay: `${idx * 0.05}s` }}
-                >
-                  {idx < 4 && (
-                    <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-bold z-20 shadow-lg animate-pulse transform hover:scale-110 transition-transform">
-                      🔥 TRENDING
+          {loading ? (
+            <ProductLoadingSkeleton />
+          ) : (
+            <div className="space-y-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Featured Products</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+                {displayProducts.length > 0 ? (
+                  displayProducts.map((product, idx) => (
+                    <div 
+                      key={product.id} 
+                      className="group relative animate-bounce-in will-change-transform hover:-translate-y-3 transition-transform duration-300"
+                      style={{ animationDelay: `${idx * 0.05}s` }}
+                    >
+                      {idx < 4 && (
+                        <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-bold z-20 shadow-lg animate-pulse transform hover:scale-110 transition-transform">
+                          🔥 TRENDING
+                        </div>
+                      )}
+                      <ProductCard product={product} />
                     </div>
-                  )}
-                  <ProductCard product={product} />
-                </div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-16">
-                <div className="inline-block">
-                  <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-emerald-400 rounded-full opacity-20 animate-pulse mb-4"></div>
-                  <p className="text-slate-600 text-lg font-semibold">Loading delicious products...</p>
-                </div>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-16">
+                    <div className="inline-block">
+                      <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-emerald-400 rounded-full opacity-20 animate-pulse mb-4"></div>
+                      <p className="text-slate-600 text-lg font-semibold">No products available</p>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* View All Button */}
-          <div className="text-center mt-8">
-            <button
-              onClick={() => navigate('/products')}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 via-red-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
-              <span className="relative">View All Products</span>
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
+              {/* View All Button */}
+              <div className="text-center mt-8">
+                <button
+                  onClick={() => navigate('/products')}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 via-red-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
+                  <span className="relative">View All Products</span>
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

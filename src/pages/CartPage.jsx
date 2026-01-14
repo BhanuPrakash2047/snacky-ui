@@ -5,6 +5,7 @@ import { Trash2, Plus, Minus, ShoppingBag, X, AlertCircle, Gift, Zap, Truck } fr
 import { Header, Footer } from '@/components/layout';
 import { Button, Input, Card, Spinner, Modal } from '@/components/common';
 import { fetchCart, updateCartItemQuantity, removeFromCart, getEligibleCoupons, applyCoupon, removeCoupon } from '@/store/thunks/cartThunks';
+import { CartPageSkeleton } from '@/components/skeletons';
 import { showToast } from '@/utils/toast';
 
 const CartPage = () => {
@@ -50,6 +51,10 @@ const CartPage = () => {
         });
     }
   }, [items, user, dispatch]);
+
+  if (loading) {
+    return <CartPageSkeleton />;
+  }
 
   const handleQuantityChange = (itemId, newQuantity) => {
     if (newQuantity < 1) return;

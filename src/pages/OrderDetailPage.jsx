@@ -9,6 +9,7 @@ import { Header, Footer } from '@/components/layout';
 import { Button, Card, Spinner, Badge } from '@/components/common';
 import { Modal } from '@/components/common/Toast';
 import { fetchOrderDetails } from '@/store/thunks/orderThunks';
+import { OrderDetailPageSkeleton } from '@/components/skeletons';
 import apiClient from '@/store/api';
 import { showToast } from '@/utils/toast';
 
@@ -50,18 +51,7 @@ const OrderDetailPage = () => {
   }, [order?.addressId]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 flex flex-col">
-        <Header />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <Spinner size="lg" />
-            <p className="mt-4 text-slate-600 font-medium">Loading order details...</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
+    return <OrderDetailPageSkeleton />;
   }
 
   if (error || !order) {

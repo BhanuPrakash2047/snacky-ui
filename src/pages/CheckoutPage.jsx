@@ -8,6 +8,7 @@ import { Button, Input, Card, Modal, Spinner } from '@/components/common';
 import { fetchAddresses, createAddress, updateAddress, deleteAddress } from '@/store/thunks/addressThunks';
 import { createOrder } from '@/store/thunks/orderThunks';
 import { fetchCart } from '@/store/thunks/cartThunks';
+import { CheckoutPageSkeleton } from '@/components/skeletons';
 import { showToast } from '@/utils/toast';
 import { useFormValidation } from '@/hooks';
 
@@ -76,6 +77,7 @@ const CheckoutPage = () => {
     }
   }, [user, dispatch]);
 
+
   // Auto-select default address
   useEffect(() => {
     if (addresses.length > 0 && !selectedAddressId) {
@@ -83,7 +85,10 @@ const CheckoutPage = () => {
       setSelectedAddressId(defaultAddr?.id || addresses[0].id);
     }
   }, [addresses, selectedAddressId]);
-
+  
+  if (cartLoading || addressLoading) {
+    return <CheckoutPageSkeleton />;
+  }
   const handleAddAddress = () => {
     setEditingAddressId(null);
     setFormValues({
@@ -562,6 +567,7 @@ const CheckoutPage = () => {
       >
         <div className="space-y-4">
           <Input
+            name="fullName"
             placeholder="Full Name *"
             value={addressForm.fullName}
             onChange={(e) => handleChange(e, addressValidationRules)}
@@ -569,6 +575,7 @@ const CheckoutPage = () => {
             error={getFieldError('fullName')}
           />
           <Input
+            name="phoneNumber"
             placeholder="Phone Number *"
             value={addressForm.phoneNumber}
             onChange={(e) => handleChange(e, addressValidationRules)}
@@ -576,6 +583,7 @@ const CheckoutPage = () => {
             error={getFieldError('phoneNumber')}
           />
           <Input
+            name="addressLine1"
             placeholder="Address Line 1 *"
             value={addressForm.addressLine1}
             onChange={(e) => handleChange(e, addressValidationRules)}
@@ -583,6 +591,7 @@ const CheckoutPage = () => {
             error={getFieldError('addressLine1')}
           />
           <Input
+            name="addressLine2"
             placeholder="Address Line 2 (Optional)"
             value={addressForm.addressLine2}
             onChange={(e) => handleChange(e, addressValidationRules)}
@@ -590,6 +599,7 @@ const CheckoutPage = () => {
           />
           <div className="grid grid-cols-2 gap-4">
             <Input
+              name="city"
               placeholder="City *"
               value={addressForm.city}
               onChange={(e) => handleChange(e, addressValidationRules)}
@@ -597,6 +607,7 @@ const CheckoutPage = () => {
               error={getFieldError('city')}
             />
             <Input
+              name="state"
               placeholder="State *"
               value={addressForm.state}
               onChange={(e) => handleChange(e, addressValidationRules)}
@@ -605,6 +616,7 @@ const CheckoutPage = () => {
             />
           </div>
           <Input
+            name="zipCode"
             placeholder="PIN Code *"
             value={addressForm.zipCode}
             onChange={(e) => handleChange(e, addressValidationRules)}
