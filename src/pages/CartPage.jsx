@@ -180,31 +180,31 @@ const CartPage = () => {
       
       <Header />
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-6 pb-8 md:pt-12 md:pb-16">
+      {/* HERO SECTION - Compact Mobile */}
+      <section className="relative overflow-hidden pt-4 pb-4 md:pt-12 md:pb-16">
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-orange-400/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-center space-y-3 md:space-y-4 animate-slide-in-left">
-            <div className="inline-flex items-center gap-2 bg-linear-to-r from-orange-100 to-red-100 text-orange-700 px-3 md:px-4 py-2 rounded-full w-fit border border-orange-200 mx-auto text-xs md:text-sm">
-              <span className="text-xl">🛒</span>
-              <span className="text-sm font-semibold">Shopping Cart</span>
+          <div className="text-center space-y-2 md:space-y-4 animate-slide-in-left">
+            <div className="inline-flex items-center gap-2 bg-linear-to-r from-orange-100 to-red-100 text-orange-700 px-2 md:px-4 py-1 md:py-2 rounded-full w-fit border border-orange-200 mx-auto text-xs">
+              <span className="text-lg md:text-xl">🛒</span>
+              <span className="text-xs md:text-sm font-semibold">Shopping Cart</span>
             </div>
-            <h1 className="text-2xl md:text-5xl lg:text-6xl font-black bg-linear-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent">
-              Your Order, Our Priority 💝
+            <h1 className="text-xl md:text-5xl lg:text-6xl font-black bg-linear-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent">
+              Your Order
             </h1>
             <p className="text-xs md:text-lg text-slate-600 max-w-2xl mx-auto">
-              {safeCartItems.length} {safeCartItems.length === 1 ? 'delicious item' : 'delicious items'} waiting to be delivered to your doorstep
+              {safeCartItems.length} {safeCartItems.length === 1 ? 'item' : 'items'} in cart
             </p>
           </div>
         </div>
       </section>
 
       {/* MAIN CONTENT */}
-      <section className="py-6 md:py-12 lg:py-16">
+      <section className="py-4 md:py-12 lg:py-16 pb-32 md:pb-12">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {safeCartItems.length === 0 ? (
             // Empty Cart
@@ -224,17 +224,17 @@ const CartPage = () => {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
               {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
+              <div className="lg:col-span-2 space-y-2 md:space-y-4">
                 {safeCartItems.map((item, idx) => (
                   <div 
                     key={item.id}
                     className="animate-bounce-in"
                     style={{ animationDelay: `${idx * 0.05}s` }}
                   >
-                    <div className="bg-white rounded-2xl border-2 border-slate-100 hover:border-orange-300 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group p-3 md:p-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 md:gap-6">
+                    <div className="bg-white rounded-lg md:rounded-2xl border-2 border-slate-100 hover:border-orange-300 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group p-2 md:p-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 md:gap-6">
                         {/* Product Image */}
-                        <div className="sm:col-span-1 bg-linear-to-br from-orange-50 to-slate-100 rounded-xl overflow-hidden h-32 sm:h-40 group-hover:shadow-lg transition-all duration-300">
+                        <div className="sm:col-span-1 bg-linear-to-br from-orange-50 to-slate-100 rounded-lg md:rounded-xl overflow-hidden h-24 md:h-40 group-hover:shadow-lg transition-all duration-300">
                           <img
                             src={
                               (productImages[item.productId] && productImages[item.productId].length > 0)
@@ -248,61 +248,61 @@ const CartPage = () => {
 
                         {/* Product Info */}
                         <div className="sm:col-span-2">
-                          <h3 className="font-bold text-slate-900 mb-2 text-base md:text-lg line-clamp-2">{item.productName}</h3>
-                          <p className="text-xs md:text-sm text-orange-600 font-semibold mb-3 bg-orange-50 rounded-full w-fit px-3 py-1">{item.category}</p>
+                          <h3 className="font-bold text-slate-900 mb-1 md:mb-2 text-sm md:text-lg line-clamp-2">{item.productName}</h3>
+                          <p className="text-xs text-orange-600 font-semibold mb-2 bg-orange-50 rounded-full w-fit px-2 py-0.5">{item.category}</p>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xl md:text-2xl font-black text-orange-600">
+                            <span className="text-lg md:text-2xl font-black text-orange-600">
                               ₹{item.currentPrice}
                             </span>
                             {item.originalPrice && (
-                              <span className="text-sm text-slate-400 line-through">
+                              <span className="text-xs text-slate-400 line-through">
                                 ₹{item.originalPrice}
                               </span>
                             )}
                             {item.originalPrice && (
-                              <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                                Save {Math.round(((item.originalPrice - item.currentPrice) / item.originalPrice) * 100)}%
+                              <span className="text-xs font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
+                                {Math.round(((item.originalPrice - item.currentPrice) / item.originalPrice) * 100)}% off
                               </span>
                             )}
                           </div>
                         </div>
 
                         {/* Quantity & Remove */}
-                        <div className="sm:col-span-1 flex flex-col justify-between gap-3">
+                        <div className="sm:col-span-1 flex flex-col justify-between gap-2">
                           {/* Quantity Selector */}
-                          <div className="flex items-center gap-2 bg-linear-to-r from-orange-50 to-red-50 rounded-xl w-fit p-2 self-start md:self-end">
+                          <div className="flex items-center gap-1 bg-linear-to-r from-orange-50 to-red-50 rounded-lg w-fit p-1 self-start md:self-end">
                             <button
                               onClick={() => handleQuantityChange(item.cartItemId, item.quantity - 1)}
-                              className="p-1 hover:bg-white rounded-lg transition text-orange-600 hover:text-orange-700"
+                              className="p-0.5 hover:bg-white rounded transition text-orange-600 hover:text-orange-700"
                             >
-                              <Minus className="w-4 h-4" />
+                              <Minus className="w-3 h-3 md:w-4 md:h-4" />
                             </button>
-                            <span className="w-6 text-center font-bold text-slate-900 text-sm">
+                            <span className="w-5 text-center font-bold text-slate-900 text-xs md:text-sm">
                               {item.quantity}
                             </span>
                             <button
                               onClick={() => handleQuantityChange(item.cartItemId, item.quantity + 1)}
-                              className="p-1 hover:bg-white rounded-lg transition text-orange-600 hover:text-orange-700"
+                              className="p-0.5 hover:bg-white rounded transition text-orange-600 hover:text-orange-700"
                             >
-                              <Plus className="w-4 h-4" />
+                              <Plus className="w-3 h-3 md:w-4 md:h-4" />
                             </button>
                           </div>
 
                           {/* Remove Button */}
                           <button
                             onClick={() => handleRemoveItem(item.cartItemId)}
-                            className="text-red-600 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg transition text-sm font-semibold flex items-center gap-1 self-start md:self-end"
+                            className="text-red-600 hover:text-red-700 p-1 hover:bg-red-50 rounded transition text-xs md:text-sm font-semibold flex items-center gap-1 self-start md:self-end"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
                             <span className="hidden md:inline">Remove</span>
                           </button>
                         </div>
                       </div>
 
                       {/* Item Total */}
-                      <div className="mt-4 pt-4 border-t-2 border-slate-100 text-right">
-                        <p className="text-xs md:text-sm text-slate-600 mb-1 font-semibold">Item Total</p>
-                        <p className="text-lg md:text-xl font-black text-orange-600">
+                      <div className="mt-2 pt-2 border-t-2 border-slate-100 text-right">
+                        <p className="text-xs text-slate-600 mb-0.5 font-semibold">Total</p>
+                        <p className="text-base md:text-xl font-black text-orange-600">
                           ₹{(item.currentPrice * item.quantity).toLocaleString()}
                         </p>
                       </div>
@@ -313,42 +313,42 @@ const CartPage = () => {
                 {/* Continue Shopping */}
                 <button
                   onClick={handleContinueShopping}
-                  className="w-full mt-2 py-3 md:py-4 px-6 rounded-xl font-bold text-slate-700 border-2 border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-300 flex items-center justify-center gap-2 group text-sm md:text-base"
+                  className="w-full mt-2 py-2 md:py-4 px-4 md:px-6 rounded-lg md:rounded-xl font-bold text-slate-700 border-2 border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-300 flex items-center justify-center gap-2 group text-xs md:text-base"
                 >
                   <span>← Continue Shopping</span>
-                  <Zap className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <Zap className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
 
-              {/* Order Summary Sidebar */}
+              {/* Order Summary - Mobile Below Items, Desktop Sidebar */}
             <div className="lg:col-span-1">
-              <div className="sticky top-20 space-y-4">
+              <div className="lg:sticky lg:top-20 space-y-4">
                 {/* Coupon Section */}
-                <div className="bg-linear-to-br from-orange-500 via-red-500 to-orange-600 rounded-2xl p-4 md:p-6 text-white shadow-lg">
+                <div className="bg-linear-to-br from-orange-500 via-red-500 to-orange-600 rounded-lg md:rounded-2xl p-3 md:p-6 text-white shadow-lg">
                   {appliedCouponCode && parseFloat(discountAmount) > 0 ? (
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       <div className="flex items-center gap-2 mb-2">
-                        <Gift className="w-5 h-5" />
-                        <p className="text-sm font-bold">✓ Coupon Applied!</p>
+                        <Gift className="w-4 h-4 md:w-5 md:h-5" />
+                        <p className="text-xs md:text-sm font-bold">✓ Coupon Applied!</p>
                       </div>
-                      <div className="bg-white/20 backdrop-blur rounded-lg p-3 flex items-center justify-between">
-                        <p className="font-bold text-lg">{appliedCouponCode}</p>
+                      <div className="bg-white/20 backdrop-blur rounded-lg p-2 md:p-3 flex items-center justify-between">
+                        <p className="font-bold text-base md:text-lg">{appliedCouponCode}</p>
                         <button
                           onClick={handleRemoveCoupon}
                           className="p-1 text-white hover:bg-white/30 rounded-full transition"
                           title="Remove coupon"
                         >
-                          <X className="w-5 h-5" />
+                          <X className="w-4 h-4 md:w-5 md:h-5" />
                         </button>
                       </div>
                     </div>
                   ) : (
                     <button
                       onClick={() => setShowCouponModal(true)}
-                      className="w-full flex items-center justify-between font-bold text-sm hover:opacity-90 transition"
+                      className="w-full flex items-center justify-between font-bold text-xs md:text-sm hover:opacity-90 transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Gift className="w-4 h-4" />
+                        <Gift className="w-3 h-3 md:w-4 md:h-4" />
                         Apply Coupon Code
                       </span>
                     </button>
@@ -356,31 +356,31 @@ const CartPage = () => {
                 </div>
 
                 {/* Order Summary Card */}
-                <div className="bg-white rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden">
+                <div className="bg-white rounded-lg md:rounded-2xl border-2 border-slate-100 shadow-sm overflow-hidden">
                   {/* Summary */}
-                  <div className="p-6 space-y-4">
-                    <h3 className="font-bold text-xl text-slate-900 mb-6 flex items-center gap-2">
-                      <span className="text-2xl">📦</span>
-                      Order Summary
+                  <div className="p-3 md:p-6 space-y-3 md:space-y-4">
+                    <h3 className="font-bold text-base md:text-xl text-slate-900 mb-3 md:mb-6 flex items-center gap-2">
+                      <span className="text-lg md:text-2xl">📦</span>
+                      <span className="text-sm md:text-base">Order Summary</span>
                     </h3>
 
-                    <div className="space-y-3">
-                      <div className="flex justify-between text-slate-600 text-sm md:text-base">
+                    <div className="space-y-2 md:space-y-3">
+                      <div className="flex justify-between text-slate-600 text-xs md:text-base">
                         <span className="font-medium">Subtotal</span>
                         <span className="font-semibold">₹{parseFloat(subtotal).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                       </div>
 
                       {parseFloat(discountAmount) > 0 && (
-                        <div className="flex justify-between text-green-600 text-sm md:text-base bg-green-50 p-3 rounded-lg">
+                        <div className="flex justify-between text-green-600 text-xs md:text-base bg-green-50 p-2 md:p-3 rounded-lg">
                           <span className="font-semibold">Discount {discountPercent > 0 && `(-${discountPercent}%)`}</span>
                           <span className="font-bold">-₹{parseFloat(discountAmount).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                         </div>
                       )}
 
-                      <div className="flex justify-between text-slate-600 text-sm md:text-base">
+                      <div className="flex justify-between text-slate-600 text-xs md:text-base">
                         <span className="font-medium flex items-center gap-2">
-                          <Truck className="w-4 h-4 text-emerald-600" />
-                          Shipping
+                          <Truck className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
+                          <span className="text-xs md:text-base">Shipping</span>
                         </span>
                         <span className="font-semibold text-emerald-600 flex items-center gap-1">
                           <span>FREE</span>
@@ -389,11 +389,11 @@ const CartPage = () => {
                       </div>
                     </div>
 
-                    <div className="border-t-2 border-slate-100 pt-4">
-                      <div className="flex justify-between mb-6">
-                        <span className="font-bold text-lg text-slate-900">Total Amount</span>
+                    <div className="border-t-2 border-slate-100 pt-3 md:pt-4">
+                      <div className="flex justify-between mb-3 md:mb-6">
+                        <span className="font-bold text-base md:text-lg text-slate-900">Total Amount</span>
                         <div className="text-right">
-                          <span className="text-3xl font-black bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                          <span className="text-2xl md:text-3xl font-black bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                             ₹{parseFloat(finalTotal).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </span>
                         </div>
@@ -401,15 +401,16 @@ const CartPage = () => {
 
                       <button
                         onClick={handleCheckout}
-                        className="w-full mb-3 py-3 md:py-4 px-6 bg-linear-to-r from-orange-600 via-red-600 to-orange-600 text-white font-bold rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm md:text-base flex items-center justify-center gap-2 group"
+                        className="w-full mb-2 md:mb-3 py-2.5 md:py-4 px-4 md:px-6 bg-linear-to-r from-orange-600 via-red-600 to-orange-600 text-white font-bold rounded-lg md:rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-xs md:text-base flex items-center justify-center gap-2 group"
                       >
-                        <Zap className="w-4 h-4 group-hover:animate-pulse" />
-                        Proceed to Checkout
+                        <Zap className="w-3 h-3 md:w-4 md:h-4 group-hover:animate-pulse" />
+                        <span className="hidden sm:inline">Proceed to Checkout</span>
+                        <span className="sm:hidden">Checkout</span>
                       </button>
 
                       <button
                         onClick={handleContinueShopping}
-                        className="w-full py-3 md:py-4 px-6 rounded-xl font-bold text-slate-700 border-2 border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-300 text-sm md:text-base"
+                        className="hidden md:block w-full py-3 md:py-4 px-6 rounded-xl font-bold text-slate-700 border-2 border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-300 text-sm md:text-base"
                       >
                         Continue Shopping
                       </button>
@@ -417,20 +418,41 @@ const CartPage = () => {
                   </div>
 
                   {/* Free Shipping Info */}
-                  <div className="bg-linear-to-r from-emerald-50 to-emerald-100 border-t-2 border-emerald-200 p-4 flex gap-3">
-                    <Truck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="bg-linear-to-r from-emerald-50 to-emerald-100 border-t-2 border-emerald-200 p-3 md:p-4 flex gap-2 md:gap-3">
+                    <Truck className="w-4 h-4 md:w-5 md:h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-bold text-emerald-900 text-sm">Free Shipping on All Orders</p>
+                      <p className="font-bold text-emerald-900 text-xs md:text-sm">Free Shipping on All Orders</p>
                       <p className="text-xs text-emerald-700 mt-0.5">Delivered across India within 5-7 business days</p>
                     </div>
                   </div>
                 </div>
               </div>
-              </div>
+            </div>
             </div>
           )}
         </div>
       </section>
+
+      {/* Sticky Mobile CTA - Only on Mobile */}
+      {safeCartItems.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t-2 border-slate-200 shadow-2xl">
+          <div className="max-w-7xl mx-auto px-4 py-3 space-y-2">
+            <button
+              onClick={handleCheckout}
+              className="w-full py-2.5 px-4 bg-linear-to-r from-orange-600 via-red-600 to-orange-600 text-white font-bold rounded-lg hover:shadow-xl transition-all duration-300 text-sm flex items-center justify-center gap-2 group"
+            >
+              <Zap className="w-3 h-3 group-hover:animate-pulse" />
+              Proceed to Checkout
+            </button>
+            <button
+              onClick={handleContinueShopping}
+              className="w-full py-2.5 px-4 rounded-lg font-semibold text-slate-700 border-2 border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition-all duration-300 text-sm"
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Coupon Modal */}
       <Modal

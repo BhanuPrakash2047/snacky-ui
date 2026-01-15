@@ -475,7 +475,7 @@ const CheckoutPage = () => {
                   <Button
                     onClick={handleAddAddress}
                     variant="outline"
-                    className="w-full flex items-center justify-center gap-2"
+                    className="w-full flex items-center justify-center gap-2 "
                   >
                     <Plus className="w-4 h-4" />
                     Add Another Address
@@ -628,7 +628,7 @@ const CheckoutPage = () => {
             <Button
               onClick={handleSaveAddress}
               variant="primary"
-              className="flex-1"
+              className="flex-1 bg-orange-600 hover:bg-orange-700"
               disabled={savingAddress}
             >
               {savingAddress ? 'Saving...' : 'Save Address'}

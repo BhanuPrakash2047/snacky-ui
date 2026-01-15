@@ -5,7 +5,9 @@ import { Button, Badge, Avatar, Drawer } from '../common';
 import { FiShoppingCart, FiUser, FiMenu, FiX, FiHome, FiPackage, FiLogOut, FiSearch } from 'react-icons/fi';
 import { Heart, Bell, Zap } from 'lucide-react';
 import { getUnreadNotificationCount } from '../../store/thunks/notificationThunks';
-
+import {  logoutUser } from '@/store/thunks/authThunks';
+import { showToast } from '@/utils/toast';
+import { useNavigate } from 'react-router-dom';
 export const Header = () => {
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -26,7 +28,11 @@ export const Header = () => {
   }, [isAuthenticated, dispatch]);
 
   const handleLogout = () => {
-    setIsProfileOpen(false);
+    if (window.confirm('Are you sure you want to logout?')) {
+      dispatch(logoutUser());
+      showToast('Logged out successfully', 'success');
+      navigate('/');
+    }
   };
 
   const navLinks = [
@@ -60,8 +66,8 @@ export const Header = () => {
                   />
                 </div>
               </div>
-              <div className="hidden sm:flex flex-col">
-                <span className="text-lg md:text-2xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">SNACKY</span>
+              <div className="flex flex-col flex-shrink-0">
+                <span className="text-base md:text-2xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">SNACKY</span>
                 <span className="text-xs font-bold text-orange-600 uppercase tracking-widest hidden md:inline">Crunch & Munch</span>
               </div>
             </Link>
@@ -95,12 +101,12 @@ export const Header = () => {
               {/* NOTIFICATIONS */}
               <Link
                 to="/notifications"
-                className="hidden md:flex items-center justify-center relative group transition-all duration-300 hover:scale-110"
+                className="flex items-center justify-center relative group transition-all duration-300 hover:scale-110"
               >
-                <div className="relative p-2 rounded-lg hover:bg-orange-100 transition-colors">
-                  <Bell className="w-6 h-6 text-slate-600 group-hover:text-orange-600 transition-colors" />
+                <div className="relative p-1.5 md:p-2 rounded-lg hover:bg-orange-100 transition-colors">
+                  <Bell className="w-5 md:w-6 h-5 md:h-6 text-slate-600 group-hover:text-orange-600 transition-colors" />
                   {unreadCount > 0 && (
-                    <span className="absolute top-1 right-1 min-w-5 h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+                    <span className="absolute top-0 right-0 min-w-4 md:min-w-5 h-4 md:h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -243,24 +249,36 @@ export const Header = () => {
         side="right"
         width="w-80"
       >
-        {/* Drawer Header Background */}
-        <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-6 -m-6 mb-4 rounded-b-2xl">
-          <h2 className="text-2xl font-black mb-2">SNACKY</h2>
-          <p className="text-sm opacity-90">Crunch & Munch - Your Favorite Snacks</p>
+        {/* Drawer Header - Minimal, Professional */}
+        <div className="bg-white border-b border-slate-200 px-4 py-4 -m-6 mb-0 rounded-none flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-bold text-slate-900">SNACKY</h2>
+            <p className="text-xs text-slate-500">Crunch & Munch</p>
+          </div>
+          <button
+            onClick={() => setIsDrawerOpen(false)}
+            className="text-slate-400 hover:text-slate-600 transition-colors"
+            aria-label="Close menu"
+          >
+            <FiX className="w-5 h-5" />
+          </button>
         </div>
 
-        <nav className="flex flex-col gap-2">
+        <nav className="flex flex-col gap-1 p-4">
           {/* Search - Mobile */}
-          <div className="mb-4 px-2">
+          <div className="mb-3 px-0">
             <div className="relative">
-              <FiSearch className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+              <FiSearch className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 rounded-lg border-2 border-slate-200 focus:border-orange-500 focus:outline-none text-sm"
+                placeholder="Search snacks..."
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:border-orange-500 focus:outline-none text-sm"
               />
             </div>
           </div>
+
+          {/* Divider */}
+          <div className="h-px bg-slate-200 my-2"></div>
 
           {/* Navigation Links */}
           {navLinks.map(({ label, href, icon: Icon }) => (
@@ -268,71 +286,73 @@ export const Header = () => {
               key={href}
               to={href}
               onClick={() => setIsDrawerOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 hover:text-orange-600 rounded-lg transition-all font-bold"
+              className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
             >
-              <Icon className="w-5 h-5" />
+              <Icon className="w-4 h-4" />
               {label}
             </Link>
           ))}
 
-          <hr className="my-2 border-orange-200" />
+          {/* Divider */}
+          <div className="h-px bg-slate-200 my-2"></div>
 
           {isAuthenticated ? (
             <>
-              {/* User Profile Section */}
-              <div className="bg-orange-50 rounded-lg p-3 mb-3">
-                <p className="font-bold text-slate-900 text-sm">{user?.name}</p>
-                <p className="text-xs text-slate-600">{user?.email}</p>
+              {/* User Profile Section - Compact */}
+              <div className="bg-slate-100 rounded-lg p-2.5 mb-3">
+                <p className="font-semibold text-slate-900 text-xs truncate">{user?.name}</p>
+                <p className="text-xs text-slate-600 truncate">{user?.email}</p>
               </div>
 
               <Link
                 to="/profile"
                 onClick={() => setIsDrawerOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 hover:text-orange-600 rounded-lg transition-all font-bold"
+                className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
               >
-                <FiUser className="w-5 h-5" />
+                <FiUser className="w-4 h-4" />
                 My Profile
               </Link>
               <Link
                 to="/orders"
                 onClick={() => setIsDrawerOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 hover:text-orange-600 rounded-lg transition-all font-bold"
+                className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
               >
-                <FiPackage className="w-5 h-5" />
+                <FiPackage className="w-4 h-4" />
                 My Orders
               </Link>
               <Link
                 to="/cart"
                 onClick={() => setIsDrawerOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 hover:text-orange-600 rounded-lg transition-all font-bold relative"
+                className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm relative"
               >
-                <FiShoppingCart className="w-5 h-5" />
+                <FiShoppingCart className="w-4 h-4" />
                 My Cart
                 {cartCount > 0 && (
-                  <span className="absolute right-4 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute right-3 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              <hr className="my-2 border-orange-200" />
+              {/* Divider */}
+              <div className="h-px bg-slate-200 my-2"></div>
 
               <button
                 onClick={() => {
                   handleLogout();
                   setIsDrawerOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all font-bold mt-2"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-all font-semibold text-sm"
               >
-                <FiLogOut className="w-5 h-5" />
+                <FiLogOut className="w-4 h-4" />
                 Logout
               </button>
             </>
           ) : (
-            <div className="space-y-2 mt-4">
+            <div className="space-y-2 mt-3">
               <Button 
                 asChild 
-                className="w-full !border-2 !border-orange-300 !text-orange-600 !bg-white !font-bold hover:!bg-orange-50"
+                className="w-full !border-2 !border-orange-300 !text-orange-600 !bg-white !font-semibold hover:!bg-orange-50 text-sm py-2"
               >
                 <Link to="/login" onClick={() => setIsDrawerOpen(false)}>
                   Login
@@ -340,7 +360,7 @@ export const Header = () => {
               </Button>
               <Button 
                 asChild 
-                className="w-full !bg-gradient-to-r !from-orange-500 !to-red-500 !text-white !font-bold"
+                className="w-full !bg-gradient-to-r !from-orange-500 !to-red-500 !text-white !font-semibold text-sm py-2"
               >
                 <Link to="/signup" onClick={() => setIsDrawerOpen(false)}>
                   Sign Up

@@ -116,7 +116,7 @@ export const HomePage = () => {
       <Header />
 
       {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-hidden pt-6 md:pt-20 pb-12 md:pb-32">
+      <section className="relative overflow-hidden pt-6 md:pt-20 md:pb-32">
         {/* Animated Background Gradient with Parallax */}
         <div className="absolute inset-0 -z-10">
           <div 
@@ -131,9 +131,9 @@ export const HomePage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 items-center">
             {/* Left: Hero Image Showcase - FIRST ON MOBILE */}
-            <div className="relative h-48 md:h-96 lg:h-[500px] animate-slide-in-right will-change-transform order-first lg:order-last" style={{ animationDelay: '0.2s' }}>
+            <div className="relative h-48 md:h-96 lg:h-[500px] animate-slide-in-right will-change-transform order-first" style={{ animationDelay: '0.2s' }}>
               <div className="absolute -inset-6 bg-gradient-to-br from-orange-300 via-red-300 to-emerald-300 rounded-3xl opacity-30 blur-2xl animate-pulse"></div>
               <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-emerald-400/20 rounded-3xl"></div>
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 group">
@@ -201,6 +201,19 @@ export const HomePage = () => {
         </div>
       </section>
 
+      {/* STICKY CTA BUTTON - MOBILE ONLY */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-orange-100 p-3 shadow-2xl z-40">
+        <button
+          onClick={() => navigate('/products')}
+          className="w-full py-3 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform active:scale-95 transition-all duration-200"
+        >
+          🛍️ Explore Snacks
+        </button>
+      </div>
+
+      {/* Add padding to body to account for sticky button on mobile */}
+      <div className="h-20 md:h-0"></div>
+
       {/* FLASH DEALS BANNER */}
       {/* <section className="py-8 bg-gradient-to-r from-red-500 to-orange-500 text-white">
         <div className="max-w-7xl mx-auto px-4">
@@ -232,7 +245,7 @@ export const HomePage = () => {
               <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow">✨ Featured Products</span>
             </div>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
-              Our Complete Snack Collection 🍿
+              Our Complete Snack Collection 
             </h2>
             <p className="text-sm md:text-lg text-slate-600 max-w-2xl">
               Hand-picked premium snacks with premium images and authentic reviews. Something for every craving!
@@ -245,7 +258,7 @@ export const HomePage = () => {
           ) : (
             <div className="space-y-4 md:space-y-6">
               <h2 className="text-xl md:text-3xl font-bold text-slate-900">Featured Products</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
                 {displayProducts.length > 0 ? (
                   displayProducts.map((product, idx) => (
                     <div 

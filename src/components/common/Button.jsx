@@ -22,9 +22,9 @@ export const Button = ({
   const baseStyles = 'font-semibold rounded-md transition-all duration-300 flex items-center justify-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2';
 
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2.5 text-base',
-    lg: 'px-6 py-3 text-lg',
+    sm: 'px-3 py-2 text-sm min-h-10',
+    md: 'px-4 py-2.5 text-base min-h-11',
+    lg: 'px-6 py-3 text-lg min-h-12',
   };
 
   const variantStyles = {
