@@ -335,11 +335,11 @@ const ProductDetailPage = () => {
             )}
 
             {/* Action Buttons */}
-            <div className="flex gap-4">
+            <div className="space-y-3">
               <Button
                 onClick={handleAddToCart}
                 variant="cta"
-                className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 flex-1 flex items-center justify-center gap-2 py-3"
+                className="w-full bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 flex items-center justify-center gap-2 py-3 text-base font-semibold text-white rounded-lg hover:shadow-lg transition-all"
                 disabled={!currentProduct.isAvailable}
               >
                 <ShoppingCart className="w-5 h-5" />
@@ -348,9 +348,10 @@ const ProductDetailPage = () => {
               <Button
                 onClick={() => {/* Share functionality */}}
                 variant="outline"
-                className="flex items-center justify-center gap-2 py-3"
+                className="w-full flex items-center justify-center gap-2 py-3 text-base font-semibold rounded-lg"
               >
                 <Share2 className="w-5 h-5" />
+                Share Product
               </Button>
             </div>
 
