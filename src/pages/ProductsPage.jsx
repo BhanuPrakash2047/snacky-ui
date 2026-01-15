@@ -109,28 +109,28 @@ const ProductsPage = () => {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent leading-tight animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-3xl md:text-7xl font-black bg-gradient-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent leading-tight animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
               Indulge Your Cravings Now! 🍿
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
+            <p className="text-sm md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
               Every snack is carefully curated for maximum flavor. Fresh stock, unbeatable prices, and lightning-fast delivery!
             </p>
 
             {/* Trust Badges */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-in-left" style={{ animationDelay: '0.3s' }}>
-              <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3">
-                <span className="text-xl"></span>
-                <span className="text-slate-700 font-medium text-sm">100% Fresh & Premium</span>
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center animate-slide-in-left" style={{ animationDelay: '0.3s' }}>
+              <div className="flex items-center gap-2 md:gap-3 bg-emerald-50 border border-emerald-200 rounded-lg px-2 md:px-4 py-2 md:py-3">
+                <span className="text-lg md:text-xl"></span>
+                <span className="text-slate-700 font-medium text-xs md:text-sm">100% Fresh & Premium</span>
               </div>
-              <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
-                <span className="text-xl"></span>
-                <span className="text-slate-700 font-medium text-sm">Authentic</span>
+              <div className="flex items-center gap-2 md:gap-3 bg-blue-50 border border-blue-200 rounded-lg px-2 md:px-4 py-2 md:py-3">
+                <span className="text-lg md:text-xl"></span>
+                <span className="text-slate-700 font-medium text-xs md:text-sm">Authentic</span>
               </div>
-              <div className="flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-lg px-4 py-3">
-                <span className="text-xl"></span>
-                <span className="text-slate-700 font-medium text-sm">Best Prices Guaranteed</span>
+              <div className="flex items-center gap-2 md:gap-3 bg-orange-50 border border-orange-200 rounded-lg px-2 md:px-4 py-2 md:py-3">
+                <span className="text-lg md:text-xl"></span>
+                <span className="text-slate-700 font-medium text-xs md:text-sm">Best Prices Guaranteed</span>
               </div>
             </div>
           </div>
@@ -149,17 +149,17 @@ const ProductsPage = () => {
       </section> */}
 
       {/* PRODUCTS SECTION */}
-      <section className="py-20 md:py-28">
+      <section className="py-12 md:py-28">
         <div className="max-w-7xl mx-auto px-4">
           {/* Section Header */}
-          <div className="mb-16 animate-slide-in-up">
+          <div className="mb-10 md:mb-16 animate-slide-in-up">
             <div className="flex items-center gap-3 mb-3">
               <div className="p-3 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg">
                 <span className="text-white text-2xl">🍴</span>
               </div>
               <span className="text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow">Explore Now</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
+              <h2 className="text-2xl md:text-5xl font-black text-slate-900 mb-4">
               Our Handpicked Favorites
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
@@ -179,20 +179,20 @@ const ProductsPage = () => {
           {/* Products Grid */}
           {!loading && displayProducts.length > 0 && (
             <div>
-              <div className="mb-8 flex items-center justify-between flex-wrap gap-4">
+              <div className="mb-8 flex items-center justify-between flex-wrap gap-3 md:gap-4">
                 <div>
-                  <p className="text-slate-600 font-semibold text-lg">
-                    <span className="text-3xl font-black text-orange-600">{displayProducts.length}</span>
+                  <p className="text-slate-600 font-semibold text-sm md:text-lg">
+                    <span className="text-2xl md:text-3xl font-black text-orange-600">{displayProducts.length}</span>
                     <span className="ml-2 text-slate-700">{displayProducts.length === 1 ? 'Product' : 'Products'} Available</span>
                   </p>
-                  <p className="text-sm text-slate-500 mt-1">All fresh, all premium, all irresistible 😋</p>
+                  <p className="text-xs md:text-sm text-slate-500 mt-1">All fresh, all premium, all irresistible 😋</p>
                 </div>
                 <div className="px-6 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200 rounded-full">
                   <p className="font-bold text-emerald-700 text-sm">✓ In Stock Ready to Ship</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
                 {displayProducts.map((product, idx) => (
                   <div 
                     key={product.id}

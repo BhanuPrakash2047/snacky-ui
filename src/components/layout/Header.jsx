@@ -40,8 +40,8 @@ export const Header = () => {
 
       {/* MAIN HEADER */}
       <header className="bg-gradient-to-b from-white to-orange-50/40 border-b-2 border-orange-100 shadow-lg sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20 gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 md:h-20 gap-2 md:gap-4">
             
             {/* LOGO/BRAND - PREMIUM STYLE */}
             <Link
@@ -56,13 +56,13 @@ export const Header = () => {
                   <img 
                     src="/Logo1.png" 
                     alt="Snacky Logo" 
-                    className="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover "
+                    className="w-8 h-8 md:w-12 md:h-12 rounded-xl object-cover"
                   />
                 </div>
               </div>
               <div className="hidden sm:flex flex-col">
-                <span className="text-2xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">SNACKY</span>
-                <span className="text-xs font-bold text-orange-600 uppercase tracking-widest">Crunch & Munch</span>
+                <span className="text-lg md:text-2xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">SNACKY</span>
+                <span className="text-xs font-bold text-orange-600 uppercase tracking-widest hidden md:inline">Crunch & Munch</span>
               </div>
             </Link>
 
@@ -90,7 +90,7 @@ export const Header = () => {
             </div>
 
             {/* RIGHT SIDE - ACTIONS */}
-            <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-1 md:gap-4">
               
               {/* NOTIFICATIONS */}
               <Link
@@ -217,7 +217,7 @@ export const Header = () => {
           </div>
 
           {/* DESKTOP NAV - Optimized */}
-          <nav className="hidden md:flex items-center gap-8 pb-4 pt-2 border-t-2 border-orange-100/50">
+          <nav className="hidden md:flex items-center gap-4 md:gap-8 pb-3 md:pb-4 pt-2 border-t-2 border-orange-100/50">
             {navLinks.map(({ label, href }) => (
               <Link
                 key={href}

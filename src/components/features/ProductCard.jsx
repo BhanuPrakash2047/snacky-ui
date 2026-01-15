@@ -71,7 +71,7 @@ export const ProductCard = ({
       <div className={`absolute -inset-1 bg-gradient-to-r from-brand-500 via-accent-500 to-brand-500 rounded-lg opacity-0 group-hover:opacity-20 blur-lg transition-opacity duration-500 -z-10`} />
 
       {/* Image Container */}
-      <div className="relative h-40 md:h-52 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+      <div className="relative h-32 md:h-52 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500">
           <div className="absolute w-40 h-40 bg-brand-500 rounded-full -top-20 -right-20 blur-3xl" />
@@ -143,11 +143,11 @@ export const ProductCard = ({
       </div>
 
       {/* Content Section - Premium Styling */}
-      <div className="flex-1 flex flex-col p-4 gap-3 bg-gradient-to-b from-white to-gray-50">
+      <div className="flex-1 flex flex-col p-3 md:p-4 gap-2 md:gap-3 bg-gradient-to-b from-white to-gray-50">
         {/* Category Label with Animation */}
         <div className="flex items-center gap-2">
-          <div className="w-1 h-4 bg-gradient-to-b from-brand-500 to-accent-500 rounded-full" />
-          <p className="text-xs font-bold text-brand-600 uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity">
+          <div className="w-1 h-3 md:h-4 bg-gradient-to-b from-brand-500 to-accent-500 rounded-full" />
+          <p className="text-xs font-bold text-brand-600 uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity hidden md:block">
             {product.category || 'Snack'}
           </p>
         </div>

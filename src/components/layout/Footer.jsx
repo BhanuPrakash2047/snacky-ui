@@ -43,22 +43,22 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-gray-900 text-gray-300 pt-10 md:pt-16 pb-6 md:pb-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 mb-8 md:mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3">
               <div className="bg-gradient-brand p-2 rounded-lg">
-                <span className="text-2xl font-bold text-white font-display">🍿</span>
+                <span className="text-lg md:text-2xl font-bold text-white font-display">🍿</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white font-display">SNACKY</h3>
+                <h3 className="text-lg md:text-xl font-bold text-white font-display">SNACKY</h3>
                 <p className="text-xs text-brand-400">Crunch & Munch</p>
               </div>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed mb-4">
+            <p className="text-xs md:text-sm text-gray-400 leading-relaxed mb-3 md:mb-4">
               Your favorite destination for premium snacks and treats. Delivered fresh to your doorstep!
             </p>
 
@@ -104,52 +104,52 @@ export const Footer = () => {
         </div>
 
         {/* Middle Section - Contact Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-8 border-t border-b border-gray-800 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 py-6 md:py-8 border-t border-b border-gray-800 mb-6 md:mb-8">
           <div className="flex items-start gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white flex-shrink-0 group-hover:shadow-brand transition-shadow">
+            <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white flex-shrink-0 group-hover:shadow-brand transition-shadow">
               <FiMapPin className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Address</p>
-              <p className="text-white font-semibold">123 Snack Street, Food City, FC 12345</p>
+              <p className="text-xs md:text-sm text-gray-400">Address</p>
+              <p className="text-white font-semibold text-sm">123 Snack Street, Food City, FC 12345</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white flex-shrink-0 group-hover:shadow-brand transition-shadow">
+            <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white flex-shrink-0 group-hover:shadow-brand transition-shadow">
               <FiPhone className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Phone</p>
-              <p className="text-white font-semibold">+1 (555) 123-4567</p>
+              <p className="text-xs md:text-sm text-gray-400">Phone</p>
+              <p className="text-white font-semibold text-sm">+1 (555) 123-4567</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white flex-shrink-0 group-hover:shadow-brand transition-shadow">
+            <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white flex-shrink-0 group-hover:shadow-brand transition-shadow">
               <FiMail className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Email</p>
-              <p className="text-white font-semibold">hello@snacky.com</p>
+              <p className="text-xs md:text-sm text-gray-400">Email</p>
+              <p className="text-white font-semibold text-sm">hello@snacky.com</p>
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <p className="text-sm text-gray-400">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+          <p className="text-xs md:text-sm text-gray-400">
             &copy; {currentYear} SNACKY. All rights reserved.
           </p>
 
           {/* Newsletter */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-col sm:flex-row">
             <input
               type="email"
               placeholder="Enter your email"
-              className="px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-brand-600 focus:ring-2 focus:ring-brand-200 transition-all duration-300 text-sm"
+              className="px-3 md:px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-brand-600 focus:ring-2 focus:ring-brand-200 transition-all duration-300 text-xs md:text-sm w-full sm:w-auto"
             />
-            <button className="px-4 py-2 bg-gradient-brand text-white rounded-lg font-semibold hover:shadow-brand transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm">
+            <button className="px-3 md:px-4 py-2 bg-gradient-brand text-white rounded-lg font-semibold hover:shadow-brand transition-all duration-300 transform hover:scale-105 active:scale-95 text-xs md:text-sm whitespace-nowrap">
               Subscribe
             </button>
           </div>

@@ -116,7 +116,7 @@ export const HomePage = () => {
       <Header />
 
       {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32">
+      <section className="relative overflow-hidden pt-6 md:pt-20 pb-12 md:pb-32">
         {/* Animated Background Gradient with Parallax */}
         <div className="absolute inset-0 -z-10">
           <div 
@@ -131,9 +131,9 @@ export const HomePage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             {/* Left: Hero Image Showcase - FIRST ON MOBILE */}
-            <div className="relative h-64 md:h-96 lg:h-[500px] animate-slide-in-right will-change-transform order-first lg:order-last" style={{ animationDelay: '0.2s' }}>
+            <div className="relative h-48 md:h-96 lg:h-[500px] animate-slide-in-right will-change-transform order-first lg:order-last" style={{ animationDelay: '0.2s' }}>
               <div className="absolute -inset-6 bg-gradient-to-br from-orange-300 via-red-300 to-emerald-300 rounded-3xl opacity-30 blur-2xl animate-pulse"></div>
               <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-emerald-400/20 rounded-3xl"></div>
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 group">
@@ -147,28 +147,28 @@ export const HomePage = () => {
             </div>
 
             {/* Right: Hero Text - SECOND ON MOBILE */}
-            <div className="space-y-6 md:space-y-8 order-last lg:order-first">
+            <div className="space-y-3 md:space-y-8 order-last lg:order-first">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 px-3 md:px-4 py-2 rounded-full w-fit border border-orange-200 animate-slide-in-left text-sm md:text-base">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 px-3 md:px-4 py-2 rounded-full w-fit border border-orange-200 animate-slide-in-left text-xs md:text-base">
                 <Sparkles className="w-4 h-4 animate-rotate-slow flex-shrink-0" />
                 <span className="font-semibold">Welcome to Snacky Paradise 🎉</span>
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-black bg-gradient-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent leading-tight animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
+              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black bg-gradient-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent leading-tight animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
                 Satisfy Your Cravings Instantly
               </h1>
 
               {/* Subheadline */}
-              <p className="text-base md:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-lg animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
+              <p className="text-sm md:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-lg animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
                 Discover mouthwatering snacks curated just for you. Fresh, delicious, and delivered to your doorstep within hours.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 animate-slide-in-left" style={{ animationDelay: '0.3s' }}>
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-4 animate-slide-in-left" style={{ animationDelay: '0.3s' }}>
                 <button
                   onClick={() => navigate('/products')}
-                  className="group relative px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 text-white font-bold rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-out animate-glow-pulse"
+                  className="group relative px-4 md:px-8 py-2 md:py-4 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 text-white font-bold rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-out animate-glow-pulse text-sm md:text-base"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
                   <span className="relative flex items-center gap-2 justify-center">
@@ -177,7 +177,7 @@ export const HomePage = () => {
                 </button>
                 <button
                   onClick={() => navigate('/products?sort=rating')}
-                  className="px-6 md:px-8 py-3 md:py-4 border-2 border-orange-400 bg-white/80 backdrop-blur text-slate-700 font-bold rounded-xl hover:border-orange-500 hover:from-orange-500 hover:to-red-500 hover:bg-gradient-to-r hover:text-white transition-all duration-300 ease-out group"
+                  className="px-4 md:px-8 py-2 md:py-4 border-2 border-orange-400 bg-white/80 backdrop-blur text-slate-700 font-bold rounded-xl hover:border-orange-500 hover:from-orange-500 hover:to-red-500 hover:bg-gradient-to-r hover:text-white transition-all duration-300 ease-out group text-sm md:text-base"
                 >
                   <span className="flex items-center gap-2 justify-center">
                     <Star className="w-5 h-5 group-hover:animate-spin" /> Top Rated
@@ -186,12 +186,12 @@ export const HomePage = () => {
               </div>
 
               {/* Trust Badges */}
-              <div className="flex flex-col sm:flex-row gap-4 md:gap-6 pt-2 md:pt-4 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>
-                <div className="flex items-center gap-3 text-sm p-3 md:p-4 rounded-lg bg-emerald-50 border border-emerald-200 hover:shadow-lg transition-shadow">
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-6 pt-2 md:pt-4 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>
+                <div className="flex items-center gap-3 text-xs md:text-sm p-2 md:p-4 rounded-lg bg-emerald-50 border border-emerald-200 hover:shadow-lg transition-shadow">
                   <div className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold flex-shrink-0">✓</div>
                   <span className="text-slate-700 font-medium">Fresh & Premium</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm p-3 md:p-4 rounded-lg bg-blue-50 border border-blue-200 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-3 text-xs md:text-sm p-2 md:p-4 rounded-lg bg-blue-50 border border-blue-200 hover:shadow-lg transition-shadow">
                   <div className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">⚡</div>
                   <span className="text-slate-700 font-medium">Best Prices</span>
                 </div>
@@ -224,17 +224,17 @@ export const HomePage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="mb-12 md:mb-16 animate-slide-in-up">
-            <div className="flex items-center gap-3 mb-3 md:mb-4">
-              <div className="p-2 md:p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-lg">
-                <TrendingUp className="w-5 md:w-6 h-5 md:h-6 text-white" />
+          <div className="mb-8 md:mb-16 animate-slide-in-up">
+            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+              <div className="p-1 md:p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-lg">
+                <TrendingUp className="w-4 md:w-6 h-4 md:h-6 text-white" />
               </div>
               <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow">✨ Featured Products</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-3 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
               Our Complete Snack Collection 🍿
             </h2>
-            <p className="text-base md:text-lg text-slate-600 max-w-2xl">
+            <p className="text-sm md:text-lg text-slate-600 max-w-2xl">
               Hand-picked premium snacks with premium images and authentic reviews. Something for every craving!
             </p>
           </div>
@@ -243,9 +243,9 @@ export const HomePage = () => {
           {loading ? (
             <ProductLoadingSkeleton />
           ) : (
-            <div className="space-y-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Featured Products</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+            <div className="space-y-4 md:space-y-6">
+              <h2 className="text-xl md:text-3xl font-bold text-slate-900">Featured Products</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
                 {displayProducts.length > 0 ? (
                   displayProducts.map((product, idx) => (
                     <div 
@@ -272,10 +272,10 @@ export const HomePage = () => {
               </div>
 
               {/* View All Button */}
-              <div className="text-center mt-8">
+              <div className="text-center mt-6 md:mt-8">
                 <button
                   onClick={() => navigate('/products')}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 via-red-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden"
+                  className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-orange-500 via-red-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden text-sm md:text-base"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
                   <span className="relative">View All Products</span>
@@ -344,11 +344,11 @@ export const HomePage = () => {
         </div>
 
         <div className="px-4 md:px-6 lg:px-8 xl:px-12 relative z-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-12 md:mb-16 text-center bg-gradient-to-r from-orange-300 via-red-300 to-emerald-300 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-black mb-8 md:mb-16 text-center bg-gradient-to-r from-orange-300 via-red-300 to-emerald-300 bg-clip-text text-transparent">
             Why 50K+ Choose Snacky 🌟
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {[
               { icon: Shield, title: '100% Authentic', desc: 'Picked by us, crafted with care, love, and passion', color: 'from-emerald-400 to-emerald-600' },
               { icon: Award, title: 'Best Prices', desc: 'Guaranteed lowest prices with exclusive deals', color: 'from-orange-400 to-orange-600' },
@@ -358,14 +358,14 @@ export const HomePage = () => {
               return (
                 <div 
                   key={idx} 
-                  className="group text-center p-6 md:p-8 rounded-2xl bg-white/10 backdrop-blur border border-white/20 hover:border-white/40 transition-all duration-300 hover:bg-white/20 hover:shadow-2xl transform hover:scale-105 animate-bounce-in"
+                  className="group text-center p-4 md:p-8 rounded-2xl bg-white/10 backdrop-blur border border-white/20 hover:border-white/40 transition-all duration-300 hover:bg-white/20 hover:shadow-2xl transform hover:scale-105 animate-bounce-in"
                   style={{ animationDelay: `${idx * 0.1}s` }}
                 >
-                  <div className={`text-4xl md:text-5xl mb-4 p-3 md:p-4 rounded-xl bg-gradient-to-br ${item.color} w-fit mx-auto`}>
+                  <div className={`text-3xl md:text-5xl mb-2 md:mb-4 p-2 md:p-4 rounded-xl bg-gradient-to-br ${item.color} w-fit mx-auto`}>
                     <Icon className="w-7 md:w-8 h-7 md:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm md:text-base text-slate-300 leading-relaxed">{item.desc}</p>
+                    <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2">{item.title}</h3>
+                  <p className="text-xs md:text-base text-slate-300 leading-relaxed">{item.desc}</p>
                 </div>
               );
             })}
@@ -391,24 +391,24 @@ export const HomePage = () => {
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="mb-12 md:mb-16 text-center animate-slide-in-up">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="p-2 md:p-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg shadow-lg">
-                <Star className="w-5 md:w-6 h-5 md:h-6 text-white" />
+          <div className="mb-8 md:mb-16 text-center animate-slide-in-up">
+            <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 md:mb-4">
+              <div className="p-1 md:p-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg shadow-lg">
+                <Star className="w-4 md:w-6 h-4 md:h-6 text-white" />
               </div>
               <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow">⭐ Customer Love</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-3 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
               What Our Customers Say 💬
             </h2>
-            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-sm md:text-lg text-slate-600 max-w-2xl mx-auto">
               Join thousands of happy customers who love our premium snacks. Read their authentic reviews!
             </p>
           </div>
 
           {/* Reviews Carousel */}
           <div className="review-container overflow-hidden">
-            <div className="animate-scroll flex gap-4 md:gap-6 pb-4">
+            <div className="animate-scroll flex gap-2 md:gap-6 pb-4">
               {[
                 { name: "Amit S.", rating: 5, review: "Authentic homemade taste. Fresh, crunchy, and perfectly sweet." },
                 { name: "Sneha R.", rating: 5, review: "Feels hand-made with love. Goes great with chai!" },
@@ -426,24 +426,24 @@ export const HomePage = () => {
               ].map((review, idx) => (
                 <div 
                   key={idx}
-                  className="flex-shrink-0 w-80 md:w-96 group animate-bounce-in"
+                  className="flex-shrink-0 w-72 md:w-96 group animate-bounce-in"
                   style={{ animationDelay: `${idx * 0.05}s` }}
                 >
-                  <div className="h-full bg-gradient-to-br from-white to-orange-50 border-2 border-gradient-to-r from-orange-200 to-emerald-200 rounded-2xl p-6 md:p-7 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-orange-400 flex flex-col">
+                  <div className="h-full bg-gradient-to-br from-white to-orange-50 border-2 border-gradient-to-r from-orange-200 to-emerald-200 rounded-2xl p-4 md:p-7 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-orange-400 flex flex-col">
                     {/* Rating Stars */}
-                    <div className="flex gap-1 mb-3">
+                    <div className="flex gap-1 mb-2 md:mb-3">
                       {Array(review.rating).fill(null).map((_, i) => (
                         <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400 drop-shadow-md" />
                       ))}
                     </div>
 
                     {/* Review Text */}
-                    <p className="text-slate-700 font-medium text-sm md:text-base mb-4 flex-1 leading-relaxed">
+                    <p className="text-slate-700 font-medium text-xs md:text-base mb-3 md:mb-4 flex-1 leading-relaxed">
                       "{review.review}"
                     </p>
 
                     {/* Reviewer Info */}
-                    <div className="flex items-center gap-3 pt-4 border-t-2 border-orange-100">
+                    <div className="flex items-center gap-2 md:gap-3 pt-3 md:pt-4 border-t-2 border-orange-100">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-bold text-sm">
                         {review.name.charAt(0)}
                       </div>

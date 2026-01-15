@@ -181,22 +181,22 @@ const CartPage = () => {
       <Header />
 
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-8 pb-12 md:pt-12 md:pb-16">
+      <section className="relative overflow-hidden pt-6 pb-8 md:pt-12 md:pb-16">
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-orange-400/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-center space-y-4 animate-slide-in-left">
-            <div className="inline-flex items-center gap-2 bg-linear-to-r from-orange-100 to-red-100 text-orange-700 px-4 py-2 rounded-full w-fit border border-orange-200 mx-auto">
+          <div className="text-center space-y-3 md:space-y-4 animate-slide-in-left">
+            <div className="inline-flex items-center gap-2 bg-linear-to-r from-orange-100 to-red-100 text-orange-700 px-3 md:px-4 py-2 rounded-full w-fit border border-orange-200 mx-auto text-xs md:text-sm">
               <span className="text-xl">🛒</span>
               <span className="text-sm font-semibold">Shopping Cart</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black bg-linear-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl md:text-5xl lg:text-6xl font-black bg-linear-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent">
               Your Order, Our Priority 💝
             </h1>
-            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-xs md:text-lg text-slate-600 max-w-2xl mx-auto">
               {safeCartItems.length} {safeCartItems.length === 1 ? 'delicious item' : 'delicious items'} waiting to be delivered to your doorstep
             </p>
           </div>
@@ -204,16 +204,16 @@ const CartPage = () => {
       </section>
 
       {/* MAIN CONTENT */}
-      <section className="py-8 md:py-12 lg:py-16">
+      <section className="py-6 md:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {safeCartItems.length === 0 ? (
             // Empty Cart
             <div className="relative group max-w-2xl mx-auto">
               <div className="absolute -inset-1 bg-linear-to-r from-orange-600 via-red-500 to-emerald-600 rounded-3xl blur-lg opacity-75 group-hover:opacity-100 transition duration-1000"></div>
-              <div className="relative bg-white rounded-3xl p-8 md:p-16 text-center">
+              <div className="relative bg-white rounded-3xl p-6 md:p-16 text-center">
                 <div className="text-7xl md:text-8xl mb-6 animate-bounce">🛍️</div>
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">Cart is Empty</h2>
-                <p className="text-base md:text-lg text-slate-600 mb-8">
+                <h2 className="text-2xl md:text-4xl font-black text-slate-900 mb-3">Cart is Empty</h2>
+                <p className="text-sm md:text-lg text-slate-600 mb-8">
                   Time to fill your cart with amazing snacks! Let's start shopping 🍿
                 </p>
                 <Button onClick={handleContinueShopping} className="bg-linear-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold px-8 py-4 rounded-xl">
@@ -222,7 +222,7 @@ const CartPage = () => {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
               {/* Cart Items */}
               <div className="lg:col-span-2 space-y-4">
                 {safeCartItems.map((item, idx) => (
@@ -231,8 +231,8 @@ const CartPage = () => {
                     className="animate-bounce-in"
                     style={{ animationDelay: `${idx * 0.05}s` }}
                   >
-                    <div className="bg-white rounded-2xl border-2 border-slate-100 hover:border-orange-300 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group p-4 md:p-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 md:gap-6">
+                    <div className="bg-white rounded-2xl border-2 border-slate-100 hover:border-orange-300 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group p-3 md:p-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 md:gap-6">
                         {/* Product Image */}
                         <div className="sm:col-span-1 bg-linear-to-br from-orange-50 to-slate-100 rounded-xl overflow-hidden h-32 sm:h-40 group-hover:shadow-lg transition-all duration-300">
                           <img
