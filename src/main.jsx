@@ -7,10 +7,10 @@ import store from './store'
 import { ToastContainer } from './components/common/Toast'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+
     <Provider store={store}>
       <App />
       <ToastContainer />
     </Provider>
-  </StrictMode>,
+  ,
 )

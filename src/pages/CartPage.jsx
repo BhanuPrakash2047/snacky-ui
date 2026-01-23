@@ -19,38 +19,43 @@ const CartPage = () => {
   const [showCouponModal, setShowCouponModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   const [applyingCoupon, setApplyingCoupon] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
-  // Fetch cart and eligible coupons on mount
+  // Fetch cart and eligible coupons on mount only
   useEffect(() => {
-    if (user) {
+    if (user && !hasInitialized) {
       dispatch(fetchCart())
         .unwrap()
+        .then(() => {
+          // Only fetch coupons after cart is successfully loaded
+          return dispatch(getEligibleCoupons()).unwrap();
+        })
         .catch(err => {
           showToast(err || 'Failed to load cart', 'error');
+        })
+        .finally(() => {
+          setHasInitialized(true);
         });
-      
-      // Fetch eligible coupons for the cart
-      dispatch(getEligibleCoupons())
-        .unwrap()
-        .catch(err => {
-          console.error('Failed to fetch eligible coupons', err);
-        });
-    } else {
+    } else if (!user) {
       navigate('/login');
     }
   }, [user, dispatch, navigate]);
 
-  // Refetch eligible coupons whenever cart items change (quantity, add, remove operations)
-  // This ensures coupons eligibility is always recalculated based on current cart total
+  // Refetch eligible coupons only when user manually changes cart (via button clicks)
+  // This is triggered by quantity changes and item removals which dispatch actions
   useEffect(() => {
-    if (user && items && items.length > 0) {
-      dispatch(getEligibleCoupons())
-        .unwrap()
-        .catch(err => {
-          console.error('Failed to refresh eligible coupons', err);
-        });
+    if (user && hasInitialized && items && items.length > 0) {
+      const timer = setTimeout(() => {
+        dispatch(getEligibleCoupons())
+          .unwrap()
+          .catch(err => {
+            console.error('Failed to refresh eligible coupons', err);
+          });
+      }, 500); // Debounce to avoid multiple rapid requests
+
+      return () => clearTimeout(timer);
     }
-  }, [items, user, dispatch]);
+  }, [items.length, user, dispatch]);
 
   if (loading) {
     return <CartPageSkeleton />;
