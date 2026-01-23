@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Badge, Avatar, Drawer } from '../common';
@@ -13,6 +13,8 @@ export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchFocus, setSearchFocus] = useState(false);
+  const navigate = useNavigate();
+  const profileMenuRef = useRef(null);
 
   const { user, token } = useSelector(state => state.auth);
   const { items: cartItems } = useSelector(state => state.cart);
@@ -20,6 +22,23 @@ export const Header = () => {
   const cartCount = cartItems.length;
 
   const isAuthenticated = !!token && !!user;
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    if (isProfileOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isProfileOpen]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -73,7 +92,7 @@ export const Header = () => {
             </Link>
 
             {/* SEARCH BAR - CENTER (Desktop Only) */}
-            <div className="hidden md:flex flex-1 mx-8 max-w-md">
+            {/* <div className="hidden md:flex flex-1 mx-8 max-w-md">
               <div className={`w-full relative transition-all duration-300 ${searchFocus ? 'scale-105' : ''}`}>
                 <FiSearch className={`absolute left-4 top-3.5 w-5 h-5 transition-colors ${searchFocus ? 'text-orange-600' : 'text-slate-400'}`} />
                 <input
@@ -93,7 +112,7 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* RIGHT SIDE - ACTIONS */}
             <div className="flex items-center gap-1 md:gap-4">
@@ -106,7 +125,7 @@ export const Header = () => {
                 <div className="relative p-1.5 md:p-2 rounded-lg hover:bg-orange-100 transition-colors">
                   <Bell className="w-5 md:w-6 h-5 md:h-6 text-slate-600 group-hover:text-orange-600 transition-colors" />
                   {unreadCount > 0 && (
-                    <span className="absolute top-0 right-0 min-w-4 md:min-w-5 h-4 md:h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+                    <span className="absolute top-0 -right-1.5 min-w-5 h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full shadow-lg animate-bounce">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -122,7 +141,7 @@ export const Header = () => {
                   <div className="relative">
                     <FiShoppingCart className="w-6 h-6 text-slate-600 group-hover:text-orange-600 transition-colors" />
                     {cartCount > 0 && (
-                      <div className="absolute -top-1 -right-1 min-w-6 h-6 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-bounce">
+                      <div className="absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-bounce">
                         {cartCount}
                       </div>
                     )}
@@ -133,17 +152,25 @@ export const Header = () => {
               {/* AUTH - Desktop */}
               {isAuthenticated ? (
                 <div className="hidden md:flex items-center gap-4 ml-2 pl-4 border-l-2 border-orange-200">
-                  <div className="relative group">
-                    <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-100 transition-all duration-300 group">
+                  <div 
+                    className="relative"
+                    ref={profileMenuRef}
+                  >
+                    <button 
+                      onClick={() => setIsProfileOpen(!isProfileOpen)}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-100 transition-all duration-300"
+                    >
                       <Avatar size="sm" name={user?.email || 'User'} />
                       <span className="text-sm font-bold text-slate-700 hidden lg:block">
                         {user?.name?.split(' ')[0]}
                       </span>
-                      <Zap className="w-4 h-4 text-blue-100 group-hover:opacity-100 transition-opacity" />
+                      <Zap className="w-4 h-4 text-blue-100 hover:opacity-100 transition-opacity" />
                     </button>
 
                     {/* Premium Dropdown */}
-                    <div className="absolute right-0 top-full mt-3 w-56 bg-white rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border-2 border-orange-100 overflow-hidden">
+                    <div className={`absolute right-0 top-full mt-3 w-56 bg-white rounded-2xl shadow-2xl border-2 border-orange-100 overflow-hidden transition-all duration-300 ${
+                      isProfileOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                    }`}>
                       {/* Dropdown Header */}
                       <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-3">
                         <p className="font-bold">{user?.name}</p>
@@ -266,7 +293,7 @@ export const Header = () => {
 
         <nav className="flex flex-col gap-1 p-4">
           {/* Search - Mobile */}
-          <div className="mb-3 px-0">
+          {/* <div className="mb-3 px-0">
             <div className="relative">
               <FiSearch className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
               <input
@@ -275,7 +302,7 @@ export const Header = () => {
                 className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:border-orange-500 focus:outline-none text-sm"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Divider */}
           <div className="h-px bg-slate-200 my-2"></div>

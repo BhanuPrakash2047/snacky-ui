@@ -21,7 +21,6 @@ export const ProductCard = ({
   const { user } = useSelector(state => state.auth);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   if (loading) {
     return (
@@ -62,18 +61,16 @@ export const ProductCard = ({
 
   return (
     <Card
-      className="group relative overflow-hidden h-full flex flex-col transition-all duration-500 ease-out hover:shadow-2xl hover:border-brand-400 transform hover:-translate-y-2 will-change-transform"
+      className="group relative overflow-hidden h-full flex flex-col transition-all duration-700 ease-out hover:shadow-2xl hover:border-brand-400 transform hover:-translate-y-2 will-change-transform"
       hoverable
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Gradient Glow Background - Premium Effect */}
-      <div className={`absolute -inset-1 bg-gradient-to-r from-brand-500 via-accent-500 to-brand-500 rounded-lg opacity-0 group-hover:opacity-20 blur-lg transition-opacity duration-500 -z-10`} />
+      <div className={`absolute -inset-1 bg-gradient-to-r from-brand-500 via-accent-500 to-brand-500 rounded-lg opacity-0 group-hover:opacity-20 blur-lg transition-opacity duration-700 ease-out -z-10`} />
 
       {/* Image Container - Full Width, No Padding */}
       <div className="relative h-24 md:h-52 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 -m-0">
         {/* Animated Background Pattern */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500">
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-700 ease-out">
           <div className="absolute w-40 h-40 bg-brand-500 rounded-full -top-20 -right-20 blur-3xl" />
           <div className="absolute w-40 h-40 bg-accent-500 rounded-full -bottom-20 -left-20 blur-3xl" />
         </div>
@@ -82,13 +79,11 @@ export const ProductCard = ({
         <img
           src={product.image || 'https://via.placeholder.com/300x200?text=Product'}
           alt={product.name}
-          className={`w-full h-full object-cover transition-transform duration-[600ms] ease-out will-change-transform ${
-            isHovered ? 'scale-[1.15]' : 'scale-100'
-          }`}
+          className="w-full h-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.15]"
         />
 
         {/* Floating Gradient Overlay */}
-        <div className={`absolute inset-0 bg-gradient-to-t ${categoryGradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 ease-out pointer-events-none`} />
+        <div className={`absolute inset-0 bg-gradient-to-t ${categoryGradient} opacity-0 group-hover:opacity-10 transition-opacity duration-700 ease-out pointer-events-none`} />
 
         {/* Premium Badges with Animation */}
         <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2 z-10">
@@ -116,7 +111,7 @@ export const ProductCard = ({
         {/* Premium Quick View Overlay - Desktop Only */}
         <Link
           to={`/products/${product.id}`}
-          className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent hidden md:flex flex-col items-center justify-center gap-2 transition-all duration-300 ease-out opacity-0 group-hover:opacity-100 z-20 p-4`}
+          className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent hidden md:flex flex-col items-center justify-center gap-2 transition-all duration-700 ease-out opacity-0 group-hover:opacity-100 z-20 p-4`}
         >
           <div className="transform transition-transform duration-400 ease-out translate-y-8 group-hover:translate-y-0">
             <Button 

@@ -242,7 +242,7 @@ export const HomePage = () => {
               <div className="p-1 md:p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-lg">
                 <TrendingUp className="w-4 md:w-6 h-4 md:h-6 text-white" />
               </div>
-              <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow">✨ Featured Products</span>
+              <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow"> Featured Products</span>
             </div>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
               Our Complete Snack Collection 
