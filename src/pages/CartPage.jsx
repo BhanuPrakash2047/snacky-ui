@@ -231,10 +231,10 @@ const CartPage = () => {
                     className="animate-bounce-in"
                     style={{ animationDelay: `${idx * 0.05}s` }}
                   >
-                    <div className="bg-white rounded-lg md:rounded-2xl border-2 border-slate-100 hover:border-orange-300 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group p-2 md:p-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 md:gap-6">
+                    <div className="bg-white rounded-lg md:rounded-2xl border-2 border-slate-100 hover:border-orange-300 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group p-2 md:p-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-1.5 md:gap-4">
                         {/* Product Image */}
-                        <div className="sm:col-span-1 bg-linear-to-br from-orange-50 to-slate-100 rounded-lg md:rounded-xl overflow-hidden h-24 md:h-40 group-hover:shadow-lg transition-all duration-300">
+                        <div className="sm:col-span-1 bg-linear-to-br from-orange-50 to-slate-100 rounded-lg md:rounded-xl overflow-hidden h-20 md:h-32 group-hover:shadow-lg transition-all duration-300">
                           <img
                             src={
                               (productImages[item.productId] && productImages[item.productId].length > 0)
@@ -248,19 +248,19 @@ const CartPage = () => {
 
                         {/* Product Info */}
                         <div className="sm:col-span-2">
-                          <h3 className="font-bold text-slate-900 mb-1 md:mb-2 text-sm md:text-lg line-clamp-2">{item.productName}</h3>
-                          <p className="text-xs text-orange-600 font-semibold mb-2 bg-orange-50 rounded-full w-fit px-2 py-0.5">{item.category}</p>
+                          <h3 className="font-bold text-slate-900 mb-1 md:mb-2 text-xs md:text-base line-clamp-2">{item.productName}</h3>
+                          <p className="text-[10px] md:text-xs text-orange-600 font-semibold mb-1 md:mb-2 bg-orange-50 rounded-full w-fit px-1.5 py-0.5">{item.category}</p>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-lg md:text-2xl font-black text-orange-600">
+                            <span className="text-base md:text-lg font-black text-orange-600">
                               ₹{item.currentPrice}
                             </span>
                             {item.originalPrice && (
-                              <span className="text-xs text-slate-400 line-through">
+                              <span className="text-[10px] md:text-xs text-slate-400 line-through">
                                 ₹{item.originalPrice}
                               </span>
                             )}
                             {item.originalPrice && (
-                              <span className="text-xs font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
+                              <span className="text-[10px] md:text-xs font-bold text-green-600 bg-green-50 px-1 py-0.5 rounded">
                                 {Math.round(((item.originalPrice - item.currentPrice) / item.originalPrice) * 100)}% off
                               </span>
                             )}
@@ -300,9 +300,9 @@ const CartPage = () => {
                       </div>
 
                       {/* Item Total */}
-                      <div className="mt-2 pt-2 border-t-2 border-slate-100 text-right">
-                        <p className="text-xs text-slate-600 mb-0.5 font-semibold">Total</p>
-                        <p className="text-base md:text-xl font-black text-orange-600">
+                      <div className="mt-1.5 pt-1.5 border-t-2 border-slate-100 text-right">
+                        <p className="text-[10px] md:text-xs text-slate-600 mb-0.5 font-semibold">Total</p>
+                        <p className="text-sm md:text-base font-black text-orange-600">
                           ₹{(item.currentPrice * item.quantity).toLocaleString()}
                         </p>
                       </div>

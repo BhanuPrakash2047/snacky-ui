@@ -68,7 +68,7 @@ export const ProductCard = ({
       <div className={`absolute -inset-1 bg-gradient-to-r from-brand-500 via-accent-500 to-brand-500 rounded-lg opacity-0 group-hover:opacity-20 blur-lg transition-opacity duration-700 ease-out -z-10`} />
 
       {/* Image Container - Full Width, No Padding */}
-      <div className="relative h-24 md:h-52 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 -m-0">
+      <div className="relative h-20 md:h-40 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 -m-0">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-700 ease-out">
           <div className="absolute w-40 h-40 bg-brand-500 rounded-full -top-20 -right-20 blur-3xl" />
@@ -126,31 +126,31 @@ export const ProductCard = ({
       </div>
 
       {/* Content Section - Clean & Professional */}
-      <div className="flex-1 flex flex-col p-2.5 md:p-4 gap-2 md:gap-4 bg-white">
+      <div className="flex-1 flex flex-col p-2 md:p-3 gap-1.5 md:gap-2 bg-white">
         {/* Category Label - Minimal */}
         {product.category && (
           <div className="inline-flex items-center w-fit">
-            <p className="text-xs font-semibold text-orange-600 uppercase tracking-tight bg-orange-50 px-1.5 py-0.5 md:px-2 md:py-1 rounded text-xs">
+            <p className="text-[10px] md:text-xs font-semibold text-orange-600 uppercase tracking-tight bg-orange-50 px-1 py-0.5 md:px-1.5 rounded">
               {product.category}
             </p>
           </div>
         )}
 
         {/* Product Name - Clear Hierarchy */}
-        <h3 className="text-xs md:text-base font-bold transition-all duration-300 line-clamp-2 text-slate-900 group-hover:text-orange-600">
+        <h3 className="text-xs md:text-sm font-bold transition-all duration-300 line-clamp-2 text-slate-900 group-hover:text-orange-600">
           {product.name}
         </h3>
 
         {/* Rating Section - Aligned */}
         {product.rating && (
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             <div className="flex gap-0.5">
               {Array(5)
                 .fill(null)
                 .map((_, i) => (
                   <FiStar
                     key={i}
-                    className={`w-3 h-3 ${
+                    className={`w-2.5 h-2.5 ${
                       i < Math.round(product.rating)
                         ? 'fill-yellow-400 text-yellow-400'
                         : 'text-gray-300'
@@ -158,23 +158,23 @@ export const ProductCard = ({
                   />
                 ))}
             </div>
-            <span className="text-xs text-slate-600 font-medium">
-              {product.rating.toFixed(1)} <span className="text-gray-400 text-xs">({product.reviewCount || 0})</span>
+            <span className="text-[10px] md:text-xs text-slate-600 font-medium">
+              {product.rating.toFixed(1)} <span className="text-gray-400 text-[10px]">({product.reviewCount || 0})</span>
             </span>
           </div>
         )}
 
         {/* Price Section - Clean Layout */}
-        <div className="flex items-baseline gap-1.5 py-1.5 md:py-2 flex-wrap">
-          <span className="text-lg md:text-2xl font-black text-orange-600">
+        <div className="flex items-baseline gap-1 py-1 md:py-1.5 flex-wrap">
+          <span className="text-base md:text-lg font-black text-orange-600">
             ₹{product.price?.toFixed(0) || '0'}
           </span>
           {product.originalPrice && product.originalPrice > product.price && (
             <>
-              <span className="text-xs text-slate-500 line-through">
+              <span className="text-[10px] md:text-xs text-slate-500 line-through">
                 ₹{product.originalPrice?.toFixed(0)}
               </span>
-              <span className="text-xs font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
+              <span className="text-[10px] md:text-xs font-bold text-green-600 bg-green-50 px-1 py-0.5 rounded">
                 {discountPercent}% off
               </span>
             </>
@@ -182,7 +182,7 @@ export const ProductCard = ({
         </div>
 
         {/* CTA Buttons - Mobile & Desktop */}
-        <div className="flex flex-col gap-2 mt-auto">
+        <div className="flex flex-col gap-1.5 mt-auto">
           <Link
             to={`/products/${product.id}`}
             className="w-full"
@@ -191,7 +191,7 @@ export const ProductCard = ({
               variant="outline"
               size="sm"
               fullWidth
-              className="rounded transition-all duration-300 text-xs md:text-sm py-2 md:py-2.5 border-2 border-orange-400 hover:bg-orange-50 font-semibold text-orange-600"
+              className="rounded transition-all duration-300 text-xs py-1.5 md:py-2 border-2 border-orange-400 hover:bg-orange-50 font-semibold text-orange-600"
             >
               View Details
             </Button>
@@ -204,14 +204,14 @@ export const ProductCard = ({
             disabled={!product.isAvailable}
             onClick={handleAddToCart}
             icon={FiShoppingCart}
-            className={`rounded transition-all duration-300 text-xs md:text-sm py-2 md:py-2.5 ${
+            className={`rounded transition-all duration-300 text-xs py-1.5 md:py-2 ${
               product.isAvailable
                 ? 'bg-gradient-to-r from-orange-500 to-red-600 hover:shadow-lg text-white font-semibold'
                 : 'bg-gray-300 cursor-not-allowed text-gray-600'
             }`}
           >
-            <span className="hidden sm:inline">{product.isAvailable ? 'Add to Cart' : 'Out of Stock'}</span>
-            <span className="sm:hidden">{product.isAvailable ? 'Add' : 'Out'}</span>
+            <span className="hidden sm:inline text-xs">{product.isAvailable ? 'Add to Cart' : 'Out of Stock'}</span>
+            <span className="sm:hidden text-xs">{product.isAvailable ? 'Add' : 'Out'}</span>
           </Button>
           
         </div>
