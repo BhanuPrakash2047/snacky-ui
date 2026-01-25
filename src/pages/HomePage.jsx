@@ -8,7 +8,7 @@ import { Button } from '@/components/common';
 import { fetchAllProducts, fetchProductImages } from '@/store/thunks/productThunks';
 import { ToastContainer } from '@/components/common/Toast';
 import { ProductLoadingSkeleton } from '@/components/skeletons';
-import { Flame, TrendingUp, Gift, Zap, Star, ArrowRight, ChevronRight, Sparkles, Truck, Shield, Award } from 'lucide-react';
+import { Flame, TrendingUp, Gift, Zap, Star, ArrowRight, ChevronRight, Sparkles, Truck, Shield, Award, Clock, Heart, Package, Check } from 'lucide-react';
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ export const HomePage = () => {
   useEffect(() => {
     if (products && products.length > 0) {
       products.forEach(product => {
-        // Only fetch if image not already in Redux state
         if (!productImages[product.id]) {
           dispatch(fetchProductImages(product.id))
             .catch(err => {
@@ -57,7 +56,7 @@ export const HomePage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-emerald-50 overflow-hidden">
+    <div className="min-h-screen bg-white overflow-hidden">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
@@ -68,8 +67,8 @@ export const HomePage = () => {
           100% { background-position: 1000px 0; }
         }
         @keyframes glow-pulse {
-          0%, 100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); }
-          50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.8); }
+          0%, 100% { box-shadow: 0 0 30px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2); }
+          50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.6), 0 0 80px rgba(249, 115, 22, 0.3); }
         }
         @keyframes slide-in-left {
           from { opacity: 0; transform: translateX(-30px); }
@@ -93,292 +92,298 @@ export const HomePage = () => {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes gradient-flow {
+        @keyframes gradient-shift {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-        @keyframes flip-in {
-          from { opacity: 0; transform: rotateY(-90deg); }
-          to { opacity: 1; transform: rotateY(0deg); }
+        @keyframes scale-pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
         }
-        .animate-float { animation: float 3s cubic-bezier(0.4, 0.0, 0.2, 1) infinite; }
-        .animate-shimmer { animation: shimmer 2s ease-in-out infinite; }
-        .animate-glow-pulse { animation: glow-pulse 2s cubic-bezier(0.4, 0.0, 0.6, 1) infinite; }
-        .animate-slide-in-left { animation: slide-in-left 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards; }
-        .animate-slide-in-right { animation: slide-in-right 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards; }
-        .animate-slide-in-up { animation: slide-in-up 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards; }
-        .animate-bounce-in { animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        @keyframes count-up {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-shimmer { animation: shimmer 2s linear infinite; }
+        .animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+        .animate-slide-in-left { animation: slide-in-left 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-slide-in-right { animation: slide-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-slide-in-up { animation: slide-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-bounce-in { animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         .animate-rotate-slow { animation: rotate-slow 20s linear infinite; }
-        .animate-gradient-flow { animation: gradient-flow 3s ease infinite; background-size: 200% 200%; }
-        .animate-flip-in { animation: flip-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .animate-gradient-shift { animation: gradient-shift 4s ease infinite; background-size: 200% 200%; }
+        .animate-scale-pulse { animation: scale-pulse 2s ease-in-out infinite; }
+        .animate-count-up { animation: count-up 0.5s ease-out forwards; }
+        
+        /* Smooth scroll behavior */
+        html { scroll-behavior: smooth; }
+        
+        /* Custom gradient backgrounds */
+        .bg-gradient-radial {
+          background: radial-gradient(circle at center, var(--tw-gradient-stops));
+        }
+        
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
       `}</style>
+      
       <ToastContainer />
       <Header />
 
-      {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-hidden pt-6 md:pt-20 md:pb-32">
-        {/* Animated Background Gradient with Parallax */}
-        <div className="absolute inset-0 -z-10">
+      {/* ULTRA PREMIUM HERO SECTION */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-orange-50/30 to-white pt-8 pb-12 md:pt-24 md:pb-32">
+        {/* Sophisticated Background Elements */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
           <div 
-            className="absolute top-0 left-1/4 w-64 md:w-96 h-64 md:h-96 bg-orange-400/40 rounded-full blur-3xl animate-pulse"
-            style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+            className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-orange-200/40 to-red-200/40 rounded-full blur-3xl"
+            style={{ transform: `translate(${scrollY * 0.3}px, ${scrollY * 0.2}px)` }}
           ></div>
           <div 
-            className="absolute bottom-0 right-1/4 w-64 md:w-96 h-64 md:h-96 bg-emerald-400/40 rounded-full blur-3xl animate-pulse"
-            style={{ transform: `translateY(${-scrollY * 0.3}px)` }}
+            className="absolute -bottom-24 -left-24 w-96 h-96 bg-gradient-to-br from-emerald-200/40 to-blue-200/40 rounded-full blur-3xl"
+            style={{ transform: `translate(${-scrollY * 0.2}px, ${-scrollY * 0.3}px)` }}
           ></div>
-          <div className="absolute top-1/2 right-0 w-64 md:w-80 h-64 md:h-80 bg-blue-300/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-1/2 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-slate-200/50 to-transparent"></div>
+          <div className="absolute top-0 left-1/2 w-full h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 items-center">
-            {/* Left: Hero Image Showcase - FIRST ON MOBILE */}
-            <div className="relative h-48 md:h-96 lg:h-[500px] animate-slide-in-right will-change-transform order-first" style={{ animationDelay: '0.2s' }}>
-              <div className="absolute -inset-6 bg-gradient-to-br from-orange-300 via-red-300 to-emerald-300 rounded-3xl opacity-30 blur-2xl animate-pulse"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-emerald-400/20 rounded-3xl"></div>
-              <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 group">
-                <img
-                  src="/hero.png"
-                  alt="Premium Snacks"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out group-hover:rotate-1"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            </div>
-
-            {/* Right: Hero Text - SECOND ON MOBILE */}
-            <div className="space-y-3 md:space-y-8 order-last lg:order-first">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 px-3 md:px-4 py-2 rounded-full w-fit border border-orange-200 animate-slide-in-left text-xs md:text-base">
-                <Sparkles className="w-4 h-4 animate-rotate-slow flex-shrink-0" />
-                <span className="font-semibold">Welcome to Snacky Paradise 🎉</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            
+            {/* Hero Content - Mobile: Second, Desktop: First */}
+            <div className="space-y-6 md:space-y-8 order-2 lg:order-1 text-center lg:text-left">
+              
+              {/* Premium Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 border border-orange-200/50 rounded-full backdrop-blur-sm animate-slide-in-left">
+                <Sparkles className="w-4 h-4 text-orange-600" />
+                <span className="text-sm font-semibold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">Premium Snacks Delivered Fresh</span>
               </div>
 
-              {/* Main Headline */}
-              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black bg-gradient-to-r from-orange-600 via-red-500 to-emerald-600 bg-clip-text text-transparent leading-tight animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
-                Satisfy Your Cravings Instantly
+              {/* Main Headline with Gradient */}
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
+                <span className="bg-gradient-to-r from-slate-900 via-orange-900 to-slate-900 bg-clip-text text-transparent">
+                  Cravings Meet
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 bg-clip-text text-transparent animate-gradient-shift">
+                  Perfection
+                </span>
               </h1>
 
               {/* Subheadline */}
-              <p className="text-sm md:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-lg animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-                Discover mouthwatering snacks curated just for you. Fresh, delicious, and delivered to your doorstep within hours.
+              <p className="text-base md:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
+                Artisan snacks crafted with premium ingredients. <span className="font-semibold text-slate-900">Fresh, authentic, and delivered to your door.</span>
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-4 animate-slide-in-left" style={{ animationDelay: '0.3s' }}>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-slide-in-left justify-center lg:justify-start" style={{ animationDelay: '0.3s' }}>
                 <button
                   onClick={() => navigate('/products')}
-                  className="group relative px-4 md:px-8 py-2 md:py-4 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 text-white font-bold rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-out animate-glow-pulse text-sm md:text-base"
+                  className="group relative px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold rounded-xl overflow-hidden shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-glow-pulse"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                   <span className="relative flex items-center gap-2 justify-center">
-                    Explore Now <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300 ease-out" />
+                    Shop Collection
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
+                
                 <button
                   onClick={() => navigate('/products?sort=rating')}
-                  className="px-4 md:px-8 py-2 md:py-4 border-2 border-orange-400 bg-white/80 backdrop-blur text-slate-700 font-bold rounded-xl hover:border-orange-500 hover:from-orange-500 hover:to-red-500 hover:bg-gradient-to-r hover:text-white transition-all duration-300 ease-out group text-sm md:text-base"
+                  className="group px-8 py-4 bg-white border-2 border-slate-200 text-slate-900 font-bold rounded-xl hover:border-orange-500 hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg"
                 >
                   <span className="flex items-center gap-2 justify-center">
-                    <Star className="w-5 h-5 group-hover:animate-spin" /> Top Rated
+                    <Star className="w-5 h-5" />
+                    Top Rated
                   </span>
                 </button>
               </div>
 
-              {/* Trust Badges */}
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-6 pt-2 md:pt-4 animate-slide-in-left" style={{ animationDelay: '0.4s' }}>
-                <div className="flex items-center gap-3 text-xs md:text-sm p-2 md:p-4 rounded-lg bg-emerald-50 border border-emerald-200 hover:shadow-lg transition-shadow">
-                  <div className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold flex-shrink-0">✓</div>
-                  <span className="text-slate-700 font-medium">Fresh & Premium</span>
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap gap-4 md:gap-6 pt-4 animate-slide-in-left justify-center lg:justify-start" style={{ animationDelay: '0.4s' }}>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <span className="text-slate-700 font-medium">100% Fresh</span>
                 </div>
-                <div className="flex items-center gap-3 text-xs md:text-sm p-2 md:p-4 rounded-lg bg-blue-50 border border-blue-200 hover:shadow-lg transition-shadow">
-                  <div className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">⚡</div>
-                  <span className="text-slate-700 font-medium">Best Prices</span>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <Truck className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <span className="text-slate-700 font-medium">Fast Delivery</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-orange-600" />
+                  </div>
+                  <span className="text-slate-700 font-medium">Secure Payment</span>
                 </div>
               </div>
+            </div>
+
+            {/* Hero Image - Mobile: First, Desktop: Second */}
+            <div className="relative order-1 lg:order-2 animate-slide-in-right" style={{ animationDelay: '0.2s' }}>
+              <div className="relative aspect-square md:aspect-auto md:h-[500px] lg:h-[600px]">
+                {/* Decorative elements */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-orange-200/30 via-red-200/30 to-orange-200/30 rounded-3xl blur-2xl animate-scale-pulse"></div>
+                
+                {/* Main image container */}
+                <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-white/50 group bg-gradient-to-br from-orange-50 to-red-50">
+                  <img
+                    src="/hero.png"
+                    alt="Premium Artisan Snacks"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                  
+                  {/* Floating badge */}
+                  <div className="absolute top-4 right-4 px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full shadow-lg border border-orange-100 animate-float">
+                    <div className="flex items-center gap-2">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <span className="text-sm font-bold text-slate-900">4.9/5.0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block">
+          <div className="flex flex-col items-center gap-2 text-slate-400">
+            <span className="text-xs font-medium">Scroll to explore</span>
+            <ChevronRight className="w-4 h-4 rotate-90 animate-bounce" />
+          </div>
+        </div>
+      </section>
+
+      {/* URGENCY BANNER */}
+      <section className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 py-3 md:py-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-3 md:gap-6 text-white text-center flex-wrap">
+            <div className="flex items-center gap-2">
+              <Clock className="w-5 h-5 animate-pulse" />
+              <span className="text-sm md:text-base font-bold">Limited Time: Free Delivery on Orders ₹500+</span>
+            </div>
+            <div className="hidden md:block w-px h-6 bg-white/30"></div>
+            <div className="flex items-center gap-2">
+              <Package className="w-5 h-5" />
+              <span className="text-sm md:text-base font-semibold">Same Day Delivery Available</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* STICKY CTA BUTTON - MOBILE ONLY */}
-      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-orange-100 p-3 shadow-2xl z-40">
-        <button
-          onClick={() => navigate('/products')}
-          className="w-full py-3 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform active:scale-95 transition-all duration-200"
-        >
-          🛍️ Explore Snacks
-        </button>
-      </div>
-
-      {/* Add padding to body to account for sticky button on mobile */}
-      <div className="h-20 md:h-0"></div>
-
-      {/* FLASH DEALS BANNER */}
-      {/* <section className="py-8 bg-gradient-to-r from-red-500 to-orange-500 text-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Flame className="w-8 h-8 animate-bounce" />
-              <h3 className="text-2xl font-bold">🔥 FLASH DEALS - Limited Time!</h3>
+      {/* FEATURED PRODUCTS SECTION */}
+      <section className="py-16 md:py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="text-center mb-12 md:mb-16 animate-slide-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 border border-orange-100 rounded-full mb-4">
+              <TrendingUp className="w-4 h-4 text-orange-600" />
+              <span className="text-sm font-semibold text-orange-600 uppercase tracking-wide">Curated Selection</span>
             </div>
-            <div className="text-lg font-bold animate-pulse">⏰ Only 24 Hours!</div>
-          </div>
-        </div>
-      </section> */}
-
-
-      {/* TRENDING NOW SECTION - ENHANCED */}
-      <section className="py-12 md:py-16 lg:py-24 border-t-2 border-gradient-to-r from-orange-200 via-red-200 to-emerald-200 relative overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-10 right-20 w-72 h-72 bg-orange-400/15 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-10 left-20 w-72 h-72 bg-emerald-400/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="mb-8 md:mb-16 animate-slide-in-up">
-            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
-              <div className="p-1 md:p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-lg">
-                <TrendingUp className="w-4 md:w-6 h-4 md:h-6 text-white" />
-              </div>
-              <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow"> Featured Products</span>
-            </div>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
-              Our Complete Snack Collection 
+            
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">
+              Premium Snack Collection
             </h2>
-            <p className="text-sm md:text-lg text-slate-600 max-w-2xl">
-              Hand-picked premium snacks with premium images and authentic reviews. Something for every craving!
+            
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Hand-picked artisan snacks made with authentic recipes and premium ingredients
             </p>
           </div>
 
-          {/* All Products Grid with Enhanced Styling */}
+          {/* Products Grid */}
           {loading ? (
             <ProductLoadingSkeleton />
           ) : (
-            <div className="space-y-4 md:space-y-6">
-              <h2 className="text-xl md:text-3xl font-bold text-slate-900">Featured Products</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-12">
+            <div className="space-y-8">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {displayProducts.length > 0 ? (
                   displayProducts.map((product, idx) => (
                     <div 
                       key={product.id} 
-                      className="group relative animate-bounce-in will-change-transform hover:-translate-y-3 transition-transform duration-300"
+                      className="group relative animate-bounce-in hover:-translate-y-2 transition-all duration-300"
                       style={{ animationDelay: `${idx * 0.05}s` }}
                     >
                       {idx < 4 && (
-                        <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-bold z-20 shadow-lg animate-pulse transform hover:scale-110 transition-transform">
-                          🔥 TRENDING
+                        <div className="absolute -top-3 -right-3 z-10">
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-full blur-md animate-pulse"></div>
+                            <div className="relative px-3 py-1.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
+                              <Flame className="w-3 h-3" />
+                              HOT
+                            </div>
+                          </div>
                         </div>
                       )}
                       <ProductCard product={product} />
                     </div>
                   ))
                 ) : (
-                  <div className="col-span-full text-center py-16">
-                    <div className="inline-block">
-                      <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-emerald-400 rounded-full opacity-20 animate-pulse mb-4"></div>
-                      <p className="text-slate-600 text-lg font-semibold">No products available</p>
+                  <div className="col-span-full text-center py-20">
+                    <div className="inline-flex flex-col items-center gap-4">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
+                        <Package className="w-10 h-10 text-orange-400" />
+                      </div>
+                      <p className="text-slate-600 text-lg font-medium">No products available</p>
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* View All Button */}
-              <div className="text-center mt-6 md:mt-8">
-                <button
-                  onClick={() => navigate('/products')}
-                  className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-orange-500 via-red-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden text-sm md:text-base"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
-                  <span className="relative">View All Products</span>
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
+              {/* View All CTA */}
+              {displayProducts.length > 0 && (
+                <div className="text-center pt-8">
+                  <button
+                    onClick={() => navigate('/products')}
+                    className="group inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    <span>View All Products</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
       </section>
 
-      {/* BESTSELLERS SECTION WITH FEATURE */}
-      {/* <section className="py-16 md:py-24 bg-gradient-to-r from-slate-50 to-orange-50 rounded-3xl mx-4 lg:mx-auto lg:max-w-7xl">
-        <div className="px-8 md:px-12"> */}
-          {/* <div className="mb-12">
-            <div className="flex items-center gap-3 mb-2">
-              <Star className="w-6 h-6 text-yellow-500" />
-              <span className="text-sm font-bold text-yellow-600 uppercase tracking-widest">Bestsellers</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-              Customer Favorites ⭐
-            </h2>
-            <p className="text-lg text-slate-600">
-              These snacks are flying off the shelves - don't miss out!
-            </p>
-          </div> */}
-
-          {/* Best Sellers Grid */}
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {bestSellingProducts.map(product => (
-              <div key={product.id} className="group relative">
-                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-slate-900 px-3 py-1 rounded-full text-xs font-bold z-10 flex items-center gap-1">
-                  <Zap className="w-3 h-3" /> BESTSELLER
-                </div>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* LIMITED TIME OFFERS - COMMENTED OUT */}
-      {/* <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {limitedTimeDeals.map(product => (
-              <div key={product.id} className="group relative">
-                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
-                  LIMITED
-                </div>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-
-
-      {/* WHY CHOOSE US - ENHANCED */}
-      <section className="py-12 md:py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl md:rounded-3xl mx-4 md:mx-6 lg:mx-auto lg:max-w-7xl relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-orange-500/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-64 md:w-96 h-64 md:h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        <div className="px-4 md:px-6 lg:px-8 xl:px-12 relative z-10">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-black mb-8 md:mb-16 text-center bg-gradient-to-r from-orange-300 via-red-300 to-emerald-300 bg-clip-text text-transparent">
-            Why 50K+ Choose Snacky 🌟
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+      {/* SOCIAL PROOF - STATS SECTION */}
+      <section className="py-12 md:py-16 bg-gradient-to-br from-slate-50 to-orange-50/30 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {[
-              { icon: Shield, title: '100% Authentic', desc: 'Picked by us, crafted with care, love, and passion', color: 'from-emerald-400 to-emerald-600' },
-              { icon: Award, title: 'Best Prices', desc: 'Guaranteed lowest prices with exclusive deals', color: 'from-orange-400 to-orange-600' },
-              { icon: Star, title: 'Premium Quality', desc: 'Money-back guarantee on every purchase', color: 'from-yellow-400 to-yellow-600' },
-            ].map((item, idx) => {
-              const Icon = item.icon;
+              { number: '50K+', label: 'Happy Customers', icon: Heart },
+              { number: '100%', label: 'Authentic Products', icon: Shield },
+              { number: '4.9/5', label: 'Average Rating', icon: Star },
+              { number: '24/7', label: 'Customer Support', icon: Award },
+            ].map((stat, idx) => {
+              const Icon = stat.icon;
               return (
                 <div 
-                  key={idx} 
-                  className="group text-center p-4 md:p-8 rounded-2xl bg-white/10 backdrop-blur border border-white/20 hover:border-white/40 transition-all duration-300 hover:bg-white/20 hover:shadow-2xl transform hover:scale-105 animate-bounce-in"
+                  key={idx}
+                  className="text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100 animate-count-up"
                   style={{ animationDelay: `${idx * 0.1}s` }}
                 >
-                  <div className={`text-3xl md:text-5xl mb-2 md:mb-4 p-2 md:p-4 rounded-xl bg-gradient-to-br ${item.color} w-fit mx-auto`}>
-                    <Icon className="w-7 md:w-8 h-7 md:h-8 text-white" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 mb-3 rounded-full bg-gradient-to-br from-orange-100 to-red-100">
+                    <Icon className="w-6 h-6 text-orange-600" />
                   </div>
-                    <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2">{item.title}</h3>
-                  <p className="text-xs md:text-base text-slate-300 leading-relaxed">{item.desc}</p>
+                  <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm text-slate-600 font-medium">
+                    {stat.label}
+                  </div>
                 </div>
               );
             })}
@@ -386,83 +391,152 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* CUSTOMER REVIEWS CAROUSEL - ENHANCED */}
-      <section className="py-12 md:py-16 lg:py-24 relative overflow-hidden">
+      {/* WHY CHOOSE US - BENEFITS */}
+      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-50/20 to-transparent -z-10"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="text-center mb-12 md:mb-16 animate-slide-in-up">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">
+              Why Choose Snacky?
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              We're committed to delivering the finest snacking experience
+            </p>
+          </div>
+
+          {/* Benefits Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                icon: Shield,
+                title: '100% Authentic',
+                description: 'Every product is sourced directly and verified for authenticity',
+                color: 'text-emerald-600',
+                bgColor: 'from-emerald-50 to-emerald-100'
+              },
+              {
+                icon: Award,
+                title: 'Premium Quality',
+                description: 'Handpicked ingredients and traditional recipes for the best taste',
+                color: 'text-orange-600',
+                bgColor: 'from-orange-50 to-red-100'
+              },
+              {
+                icon: Truck,
+                title: 'Fast Delivery',
+                description: 'Same-day delivery available with secure packaging',
+                color: 'text-blue-600',
+                bgColor: 'from-blue-50 to-blue-100'
+              },
+            ].map((benefit, idx) => {
+              const Icon = benefit.icon;
+              return (
+                <div
+                  key={idx}
+                  className="group relative p-8 bg-white rounded-2xl border border-slate-200 hover:border-orange-200 hover:shadow-xl transition-all duration-300 animate-slide-in-up"
+                  style={{ animationDelay: `${idx * 0.1}s` }}
+                >
+                  <div className={`inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br ${benefit.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className={`w-8 h-8 ${benefit.color}`} strokeWidth={2.5} />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                    {benefit.title}
+                  </h3>
+                  
+                  <p className="text-slate-600 leading-relaxed">
+                    {benefit.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* CUSTOMER REVIEWS - ELEGANT CAROUSEL */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-900 to-slate-800 text-white relative overflow-hidden">
         <style>{`
-          @keyframes scroll-left {
+          @keyframes scroll-reviews {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-50%); }
           }
-          .animate-scroll { animation: scroll-left 50s linear infinite; }
-          .review-container:hover .animate-scroll { animation-play-state: paused; }
+          .reviews-track { animation: scroll-reviews 60s linear infinite; }
+          .reviews-container:hover .reviews-track { animation-play-state: paused; }
         `}</style>
 
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-400/15 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-400/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="relative z-10">
           {/* Section Header */}
-          <div className="mb-8 md:mb-16 text-center animate-slide-in-up">
-            <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 md:mb-4">
-              <div className="p-1 md:p-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg shadow-lg">
-                <Star className="w-4 md:w-6 h-4 md:h-6 text-white" />
-              </div>
-              <span className="text-xs md:text-sm font-bold text-orange-600 uppercase tracking-widest drop-shadow">⭐ Customer Love</span>
+          <div className="text-center mb-12 md:mb-16 px-4 animate-slide-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-4">
+              <Star className="w-4 h-4 text-yellow-400" />
+              <span className="text-sm font-semibold text-white uppercase tracking-wide">Customer Reviews</span>
             </div>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-2 md:mb-4 bg-gradient-to-r from-orange-600 to-emerald-600 bg-clip-text text-transparent inline-block">
-              What Our Customers Say 💬
+            
+            <h2 className="text-3xl md:text-5xl font-black mb-4">
+              Loved by Thousands
             </h2>
-            <p className="text-sm md:text-lg text-slate-600 max-w-2xl mx-auto">
-              Join thousands of happy customers who love our premium snacks. Read their authentic reviews!
+            
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+              Join our community of happy customers who trust Snacky for their snacking needs
             </p>
           </div>
 
           {/* Reviews Carousel */}
-          <div className="review-container overflow-hidden">
-            <div className="animate-scroll flex gap-2 md:gap-6 pb-4">
+          <div className="reviews-container overflow-hidden">
+            <div className="reviews-track flex gap-6 pb-4">
               {[
-                { name: "Amit S.", rating: 5, review: "Authentic homemade taste. Fresh, crunchy, and perfectly sweet." },
-                { name: "Sneha R.", rating: 5, review: "Feels hand-made with love. Goes great with chai!" },
-                { name: "Rahul K.", rating: 5, review: "Premium quality, not oily, and very well packed." },
-                { name: "Priya M.", rating: 5, review: "Traditional thekua done right. Will reorder for sure." },
-                { name: "Vikram P.", rating: 5, review: "Best snacks I've had in years. Definitely worth the money!" },
-                { name: "Anjali N.", rating: 5, review: "Fresh as if just made. The packaging is amazing too!" },
-                { name: "Deepak M.", rating: 5, review: "Tastes like my grandmother made it. Absolutely divine!" },
-                { name: "Pooja S.", rating: 5, review: "Fast delivery and excellent quality. Highly recommended!" },
-                // Duplicate for infinite scroll effect
-                { name: "Amit S.", rating: 5, review: "Authentic homemade taste. Fresh, crunchy, and perfectly sweet." },
-                { name: "Sneha R.", rating: 5, review: "Feels hand-made with love. Goes great with chai!" },
-                { name: "Rahul K.", rating: 5, review: "Premium quality, not oily, and very well packed." },
-                { name: "Priya M.", rating: 5, review: "Traditional thekua done right. Will reorder for sure." },
+                { name: "Amit S.", rating: 5, review: "Authentic homemade taste. Fresh, crunchy, and perfectly sweet.", verified: true },
+                { name: "Sneha R.", rating: 5, review: "Feels hand-made with love. Goes great with chai!", verified: true },
+                { name: "Rahul K.", rating: 5, review: "Premium quality, not oily, and very well packed.", verified: true },
+                { name: "Priya M.", rating: 5, review: "Traditional thekua done right. Will reorder for sure.", verified: true },
+                { name: "Vikram P.", rating: 5, review: "Best snacks I've had in years. Definitely worth it!", verified: true },
+                { name: "Anjali N.", rating: 5, review: "Fresh as if just made. Amazing packaging too!", verified: true },
+                { name: "Deepak M.", rating: 5, review: "Tastes like my grandmother made it. Divine!", verified: true },
+                { name: "Pooja S.", rating: 5, review: "Fast delivery and excellent quality. Recommended!", verified: true },
+                // Duplicate for seamless loop
+                { name: "Amit S.", rating: 5, review: "Authentic homemade taste. Fresh, crunchy, and perfectly sweet.", verified: true },
+                { name: "Sneha R.", rating: 5, review: "Feels hand-made with love. Goes great with chai!", verified: true },
+                { name: "Rahul K.", rating: 5, review: "Premium quality, not oily, and very well packed.", verified: true },
+                { name: "Priya M.", rating: 5, review: "Traditional thekua done right. Will reorder for sure.", verified: true },
               ].map((review, idx) => (
                 <div 
                   key={idx}
-                  className="flex-shrink-0 w-72 md:w-96 group animate-bounce-in"
-                  style={{ animationDelay: `${idx * 0.05}s` }}
+                  className="flex-shrink-0 w-80 md:w-96"
                 >
-                  <div className="h-full bg-gradient-to-br from-white to-orange-50 border-2 border-gradient-to-r from-orange-200 to-emerald-200 rounded-2xl p-4 md:p-7 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-orange-400 flex flex-col">
-                    {/* Rating Stars */}
-                    <div className="flex gap-1 mb-2 md:mb-3">
+                  <div className="h-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                    {/* Rating */}
+                    <div className="flex gap-1 mb-4">
                       {Array(review.rating).fill(null).map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400 drop-shadow-md" />
+                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
 
                     {/* Review Text */}
-                    <p className="text-slate-700 font-medium text-xs md:text-base mb-3 md:mb-4 flex-1 leading-relaxed">
+                    <p className="text-white/90 text-base mb-5 leading-relaxed">
                       "{review.review}"
                     </p>
 
                     {/* Reviewer Info */}
-                    <div className="flex items-center gap-2 md:gap-3 pt-3 md:pt-4 border-t-2 border-orange-100">
+                    <div className="flex items-center gap-3 pt-4 border-t border-white/10">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-bold text-sm">
                         {review.name.charAt(0)}
                       </div>
-                      <div>
-                        <p className="font-bold text-slate-900 text-sm">{review.name}</p>
-                        <p className="text-xs text-orange-600 font-semibold">Verified Customer ✓</p>
+                      <div className="flex-1">
+                        <p className="font-bold text-white text-sm">{review.name}</p>
+                        {review.verified && (
+                          <p className="text-xs text-emerald-400 font-medium flex items-center gap-1">
+                            <Check className="w-3 h-3" /> Verified Purchase
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -471,51 +545,103 @@ export const HomePage = () => {
             </div>
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="flex justify-center mt-8 gap-2">
-            <div className="text-center">
-              <p className="text-sm text-slate-600 font-semibold mb-3">👉 Swipe/Scroll to see more reviews</p>
-              <div className="flex justify-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+          {/* Scroll Hint */}
+          <div className="text-center mt-8 px-4">
+            <p className="text-sm text-slate-400 font-medium">Hover to pause • Swipe to explore more reviews</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA SECTION */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-orange-50 via-white to-red-50 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-orange-200/40 to-red-200/40 rounded-full blur-3xl animate-scale-pulse"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-slide-in-up">
+          {/* Special Offer Badge */}
+          {/* <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full mb-6 shadow-lg">
+            <Gift className="w-4 h-4" />
+            <span className="text-sm font-bold">Special Offer: Free Delivery on Orders ₹500+</span>
+          </div> */}
+
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-slate-900 via-orange-900 to-slate-900 bg-clip-text text-transparent">
+              Ready to Elevate Your
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 bg-clip-text text-transparent animate-gradient-shift">
+              Snacking Experience?
+            </span>
+          </h2>
+
+          <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+            Join thousands of satisfied customers. Order now and taste the difference that quality makes.
+          </p>
+
+          {/* CTA Button */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              onClick={() => navigate('/products')}
+              className="group relative px-10 py-5 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 text-white font-bold text-lg rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-glow-pulse"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <span className="relative flex items-center gap-2 justify-center">
+                Start Shopping Now
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </button>
+
+            <div className="flex items-center gap-2 text-slate-600">
+              <Shield className="w-5 h-5 text-emerald-600" />
+              <span className="text-sm font-medium">100% Secure Checkout</span>
+            </div>
+          </div>
+
+          {/* Trust Signals */}
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-10 pt-8 border-t border-slate-200">
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                <Check className="w-5 h-5 text-emerald-600" />
               </div>
+              <span className="text-sm text-slate-600">Money-back Guarantee</span>
+            </div>
+            <div className="hidden sm:block w-px h-6 bg-slate-300"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                <Truck className="w-5 h-5 text-blue-600" />
+              </div>
+              <span className="text-sm text-slate-600">Free Returns</span>
+            </div>
+            <div className="hidden sm:block w-px h-6 bg-slate-300"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                <Heart className="w-5 h-5 text-orange-600" />
+              </div>
+              <span className="text-sm text-slate-600">Made with Love</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CALL TO ACTION - ENHANCED */}
-      <section className="py-12 md:py-16 lg:py-24 text-center relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 md:w-96 h-80 md:h-96 bg-gradient-to-r from-orange-400 to-red-400 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-        </div>
+      {/* MOBILE STICKY CTA */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-200 p-4 shadow-2xl z-50 animate-slide-in-up">
+        <button
+          onClick={() => navigate('/products')}
+          className="w-full py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold rounded-xl shadow-lg active:scale-95 transition-transform duration-200 flex items-center justify-center gap-2"
+        >
+          <Package className="w-5 h-5" />
+          Shop Premium Snacks
+        </button>
+      </div>
 
-        <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8 animate-slide-in-up">
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-black mb-4 md:mb-6">
-            <span className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent inline-block hover:scale-110 transition-transform duration-300">
-              Ready to Snack?
-            </span>
-          </h2>
-          <p className="text-base md:text-lg lg:text-xl text-slate-600 mb-6 md:mb-8 leading-relaxed">
-            Your favorite snacks are just a click away. Order now and get <span className="font-bold text-emerald-600">free delivery on orders over ₹500</span>!
-          </p>
-          <button
-            onClick={() => navigate('/products')}
-            className="inline-block px-6 md:px-10 py-3 md:py-5 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white font-bold text-base md:text-lg rounded-2xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 group relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 -skew-x-12 animate-shimmer"></div>
-            <span className="relative flex items-center gap-2 justify-center">
-              Shop Now <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </span>
-          </button>
-        </div>
-      </section>
+      {/* Add padding to account for mobile sticky button */}
+      <div className="h-24 md:h-0"></div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
 };
 
-export default HomePage;
+export default HomePage

@@ -272,7 +272,7 @@ export const Modal = ({
 
   return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 animate-fade-in"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in"
       onClick={() => closeOnBackdrop && onClose()}
     >
       <div

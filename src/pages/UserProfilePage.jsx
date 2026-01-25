@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, Mail, Phone, MapPin, LogOut, Lock, Upload, Eye, EyeOff } from 'lucide-react';
@@ -15,10 +15,7 @@ const UserProfilePage = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector(state => state.auth);
 
-  if (loading) {
-    return <UserProfilePageSkeleton />;
-  }
-
+  // All hooks MUST be called unconditionally at the top level
   const { 
     formData: profileForm, 
     errors: profileErrors, 
@@ -29,24 +26,10 @@ const UserProfilePage = () => {
     getFieldError: getProfileFieldError,
     setFormValues: setProfileFormValues
   } = useFormValidation({
-    fullName: '',
-    email: '',
-    phone: '',
+    fullName: user?.fullName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
   });
-
-  const profileValidationRules = {
-    fullName: 'fullName',
-    email: 'email',
-    phone: 'phone',
-  };
-
-  const [editingProfile, setEditingProfile] = useState(false);
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [changingPassword, setChangingPassword] = useState(false);
-  const [updatingProfile, setUpdatingProfile] = useState(false);
 
   const {
     formData: passwordForm,
@@ -63,6 +46,20 @@ const UserProfilePage = () => {
     confirmPassword: '',
   });
 
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [updatingProfile, setUpdatingProfile] = useState(false);
+
+  const profileValidationRules = {
+    fullName: 'fullName',
+    email: 'email',
+    phone: 'phone',
+  };
+
   const passwordValidationRules = {
     oldPassword: 'required',
     newPassword: 'password',
@@ -73,21 +70,25 @@ const UserProfilePage = () => {
     },
   };
 
-  // Initialize form with user data
+  // Redirect to login if not authenticated
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       navigate('/login');
-      return;
     }
+  }, [user, loading, navigate]);
 
-    setProfileFormValues({
-      fullName: user.fullName || '',
-      email: user.email || '',
-      phone: user.phone || '',
-    });
-  }, [user, navigate]);
+  // Sync profile form with user data
+  useEffect(() => {
+    if (user) {
+      setProfileFormValues({
+        fullName: user.fullName || '',
+        email: user.email || '',
+        phone: user.phone || '',
+      });
+    }
+  }, [user, setProfileFormValues]);
 
-  const handleUpdateProfile = async (e) => {
+  const handleUpdateProfile = useCallback(async (e) => {
     e.preventDefault();
 
     if (!validateProfileForm(profileForm, profileValidationRules)) {
@@ -104,9 +105,9 @@ const UserProfilePage = () => {
     } finally {
       setUpdatingProfile(false);
     }
-  };
+  }, [profileForm, validateProfileForm, profileValidationRules, dispatch]);
 
-  const handleChangePassword = async (e) => {
+  const handleChangePassword = useCallback(async (e) => {
     e.preventDefault();
 
     if (!validatePasswordForm(passwordForm, passwordValidationRules)) {
@@ -134,16 +135,22 @@ const UserProfilePage = () => {
     } finally {
       setChangingPassword(false);
     }
-  };
+  }, [passwordForm, validatePasswordForm, passwordValidationRules, dispatch, setPasswordFormValues]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     if (window.confirm('Are you sure you want to logout?')) {
       dispatch(logoutUser());
       showToast('Logged out successfully', 'success');
       navigate('/');
     }
-  };
+  }, [dispatch, navigate]);
 
+  // Render loading state
+  if (loading) {
+    return <UserProfilePageSkeleton />;
+  }
+
+  // Render null while redirecting (will be caught by useEffect)
   if (!user) {
     return null;
   }
@@ -282,6 +289,7 @@ const UserProfilePage = () => {
                       type="submit"
                       variant="primary"
                       disabled={updatingProfile}
+                      className="bg-orange-600 flex-1"
                     >
                       {updatingProfile ? 'Saving...' : 'Save Changes'}
                     </Button>

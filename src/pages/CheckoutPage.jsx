@@ -32,7 +32,6 @@ const CheckoutPage = () => {
     fullName: '',
     phoneNumber: '',
     addressLine1: '',
-    addressLine2: '',
     city: '',
     state: '',
     zipCode: '',
@@ -42,8 +41,7 @@ const CheckoutPage = () => {
     fullName: 'fullName',
     phoneNumber: 'phone',
     addressLine1: 'addressLine',
-    addressLine2: 'addressLine',
-    city: 'required',
+    city: 'city',
     state: 'required',
     zipCode: 'zipCode',
   };
@@ -95,7 +93,6 @@ const CheckoutPage = () => {
       fullName: '',
       phoneNumber: '',
       addressLine1: '',
-      addressLine2: '',
       city: '',
       state: '',
       zipCode: '',
@@ -109,7 +106,6 @@ const CheckoutPage = () => {
       fullName: address.fullName,
       phoneNumber: address.phoneNumber,
       addressLine1: address.addressLine1,
-      addressLine2: address.addressLine2 || '',
       city: address.city,
       state: address.state,
       zipCode: address.zipCode,
@@ -174,19 +170,20 @@ const CheckoutPage = () => {
       // Step 2: Initialize Razorpay payment
       if (orderResponse.razorpayOrderId) {
         initializeRazorpay(orderResponse);
+        // Don't disable placing state - keep button disabled during payment
       } else {
         // No payment required or COD
         setOrderSuccess(orderResponse);
         setTimeout(() => {
           navigate(`/orders/${orderResponse.orderId}`);
         }, 3000);
+        setPlacing(false); // Only reset for non-payment orders
       }
     } catch (err) {
       const errorMsg = err || 'Failed to place order';
       setError(errorMsg);
       showToast(errorMsg, 'error');
-    } finally {
-      setPlacing(false);
+      setPlacing(false); // Reset on error
     }
   };
 
@@ -277,13 +274,16 @@ const CheckoutPage = () => {
         setTimeout(() => {
           navigate(`/orders/${orderResponse.orderId}`);
         }, 2000);
+        // Keep setPlacing(true) to keep button disabled during redirect
       } else {
         setError('Payment verification failed: ' + (data.error || 'Unknown error'));
         showToast('Payment verification failed: ' + (data.error || 'Unknown error'), 'error');
+        setPlacing(false); // Re-enable button on failure
       }
     } catch (error) {
       setError('Failed to verify payment: ' + error.message);
       showToast('Failed to verify payment', 'error');
+      setPlacing(false); // Re-enable button on error
     }
   };
 
@@ -306,10 +306,12 @@ const CheckoutPage = () => {
       const data = await response.json();
       showToast('Payment cancelled. Your order is saved. You can retry anytime.', 'info');
       setError('Payment cancelled by user. You can try again.');
+      setPlacing(false); // Re-enable button to allow retry
     } catch (error) {
       console.error('Payment Cancellation Error:', error);
       showToast('Payment cancelled. Your order is saved.', 'info');
       setError('Payment cancelled. Your order is saved.');
+      setPlacing(false); // Re-enable button to allow retry
     }
   };
 
@@ -403,7 +405,7 @@ const CheckoutPage = () => {
                     variant="primary"
                     className="inline-flex items-center gap-2"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-4 h-4 bg-orange-600 hover:bg-orange-700" />
                     Add Your First Address
                   </Button>
                 </div>
@@ -442,7 +444,6 @@ const CheckoutPage = () => {
                         </div>
                         <p className="text-slate-700 text-sm mb-1">
                           {address.addressLine1}
-                          {address.addressLine2 && `, ${address.addressLine2}`}
                         </p>
                         <p className="text-slate-600 text-sm">
                           {address.city}, {address.state} - {address.zipCode}
@@ -475,7 +476,7 @@ const CheckoutPage = () => {
                   <Button
                     onClick={handleAddAddress}
                     variant="outline"
-                    className="w-full flex items-center justify-center gap-2 "
+                    className="w-full flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white"
                   >
                     <Plus className="w-4 h-4" />
                     Add Another Address
@@ -564,64 +565,92 @@ const CheckoutPage = () => {
         isOpen={showAddressModal}
         onClose={() => setShowAddressModal(false)}
         title={editingAddressId ? 'Edit Address' : 'Add New Address'}
+        size="lg"
       >
-        <div className="space-y-4">
+        <div className="space-y-5">
+          {/* Validation Help Text */}
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3">
+            <div className="text-blue-600 font-bold text-lg mt-0">ℹ</div>
+            <p className="text-sm text-blue-800">
+              All fields marked with <span className="font-bold text-red-600">*</span> are required. Please ensure all details are accurate.
+            </p>
+          </div>
+
+          {/* Full Name */}
           <Input
             name="fullName"
             placeholder="Full Name *"
+            label="Full Name"
             value={addressForm.fullName}
             onChange={(e) => handleChange(e, addressValidationRules)}
             onBlur={(e) => handleBlur('fullName', addressValidationRules)}
             error={getFieldError('fullName')}
+            helpText="Minimum 2 characters"
+            required
           />
+
+          {/* Phone Number */}
           <Input
             name="phoneNumber"
             placeholder="Phone Number *"
+            label="Phone Number"
             value={addressForm.phoneNumber}
             onChange={(e) => handleChange(e, addressValidationRules)}
             onBlur={(e) => handleBlur('phoneNumber', addressValidationRules)}
             error={getFieldError('phoneNumber')}
+            helpText="Enter a valid 10-digit phone number"
+            required
           />
+
+          {/* Address Line 1 */}
           <Input
             name="addressLine1"
             placeholder="Address Line 1 *"
+            label="Address Line 1"
             value={addressForm.addressLine1}
             onChange={(e) => handleChange(e, addressValidationRules)}
             onBlur={(e) => handleBlur('addressLine1', addressValidationRules)}
             error={getFieldError('addressLine1')}
+            helpText="Minimum 5 characters required"
+            required
           />
-          <Input
-            name="addressLine2"
-            placeholder="Address Line 2 (Optional)"
-            value={addressForm.addressLine2}
-            onChange={(e) => handleChange(e, addressValidationRules)}
-            onBlur={(e) => handleBlur('addressLine2', addressValidationRules)}
-          />
+
+          {/* City and State */}
           <div className="grid grid-cols-2 gap-4">
             <Input
               name="city"
               placeholder="City *"
+              label="City"
               value={addressForm.city}
               onChange={(e) => handleChange(e, addressValidationRules)}
               onBlur={(e) => handleBlur('city', addressValidationRules)}
               error={getFieldError('city')}
+              helpText="Minimum 2 characters"
+              required
             />
             <Input
               name="state"
               placeholder="State *"
+              label="State"
               value={addressForm.state}
               onChange={(e) => handleChange(e, addressValidationRules)}
               onBlur={(e) => handleBlur('state', addressValidationRules)}
               error={getFieldError('state')}
+              required
             />
           </div>
+
+          {/* PIN Code */}
           <Input
             name="zipCode"
             placeholder="PIN Code *"
+            label="PIN Code"
             value={addressForm.zipCode}
             onChange={(e) => handleChange(e, addressValidationRules)}
             onBlur={(e) => handleBlur('zipCode', addressValidationRules)}
             error={getFieldError('zipCode')}
+            helpText="6-digit PIN code (e.g., 533005)"
+            required
           />
 
           <div className="flex gap-3">

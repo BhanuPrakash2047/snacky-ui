@@ -98,12 +98,21 @@ export const useFormValidation = (initialFormState) => {
 
     addressLine: (value) => {
       if (!value.trim()) return 'Address is required';
-      if (value.trim().length < 5) return 'Address must be at least 5 characters';
+      if (value.trim().length < 5) return 'Address must be at least 5 characters (min 5 chars)';
+      return null;
+    },
+
+    addressLineOptional: (value) => {
+      // Optional field - only validate if not empty
+      if (value && value.trim() && value.trim().length < 5) {
+        return 'Address must be at least 5 characters (min 5 chars)';
+      }
       return null;
     },
 
     city: (value) => {
       if (!value.trim()) return 'City is required';
+      if (value.trim().length < 2) return 'City must be at least 2 characters';
       return null;
     },
 

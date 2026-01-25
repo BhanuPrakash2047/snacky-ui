@@ -258,7 +258,7 @@ const OrderHistoryPage = () => {
             </Card>
           </div>
         ) : (
-          <div className="space-y-2.5 md:space-y-4">
+          <div className="space-y-3 md:space-y-4 lg:space-y-5">
             {filteredOrders.map((order, index) => (
               <div
                 key={order.id}
@@ -278,20 +278,20 @@ const OrderHistoryPage = () => {
                     'from-yellow-400 to-orange-500'
                   }`} />
 
-                  {/* Mobile Layout */}
-                  <div className="md:hidden p-3 space-y-2.5">
+                  {/* Unified Card Layout for Mobile & Desktop */}
+                  <div className="p-3 md:p-4 lg:p-5 space-y-3 md:space-y-3.5">
                     {/* Header Row */}
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-sm text-slate-900 truncate mb-0.5">
+                        <h3 className="font-semibold text-sm md:text-base lg:text-lg text-slate-900 truncate mb-0.5">
                           {order.orderNumber}
                         </h3>
-                        <div className="flex items-center gap-1 text-xs text-slate-500 mb-1">
-                          <Calendar className="w-3 h-3 shrink-0" />
+                        <div className="flex items-center gap-1 text-xs md:text-sm text-slate-500 mb-1">
+                          <Calendar className="w-3 h-3 md:w-4 md:h-4 shrink-0" />
                           {formatDate(order.createdAt)}
                         </div>
                         {order.receiverName && (
-                          <p className="text-xs text-slate-600 truncate">
+                          <p className="text-xs md:text-sm text-slate-600 truncate">
                             {order.receiverName}
                           </p>
                         )}
@@ -299,7 +299,7 @@ const OrderHistoryPage = () => {
                       <Badge
                         variant={getStatusColor(order.status)}
                         size="sm"
-                        className="flex items-center gap-1 px-2.5 py-1 text-xs shrink-0 whitespace-nowrap"
+                        className="flex items-center gap-1 px-2.5 md:px-3 py-1 md:py-1.5 text-xs md:text-sm shrink-0 whitespace-nowrap"
                       >
                         {getStatusIcon(order.status)}
                         {formatStatus(order.status)}
@@ -307,22 +307,22 @@ const OrderHistoryPage = () => {
                     </div>
 
                     {/* Stats Row */}
-                    <div className="grid grid-cols-3 gap-2 bg-slate-50 rounded-lg p-2.5">
+                    <div className="grid grid-cols-3 gap-2 md:gap-3 bg-slate-50 rounded-lg p-2.5 md:p-3 lg:p-4">
                       <div className="text-center">
-                        <p className="text-xs font-medium text-slate-600 mb-0.5">Items</p>
-                        <p className="text-sm font-bold text-slate-900">
+                        <p className="text-xs md:text-sm font-medium text-slate-600 mb-0.5 md:mb-1">Items</p>
+                        <p className="text-sm md:text-base lg:text-lg font-bold text-slate-900">
                           {order.itemCount || 0}
                         </p>
                       </div>
                       <div className="text-center border-l border-r border-slate-200">
-                        <p className="text-xs font-medium text-slate-600 mb-0.5">Amount</p>
-                        <p className="text-sm font-bold bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                        <p className="text-xs md:text-sm font-medium text-slate-600 mb-0.5 md:mb-1">Amount</p>
+                        <p className="text-sm md:text-base lg:text-lg font-bold bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                           {formatAmount(order.totalAmount)}
                         </p>
                       </div>
                       <div className="text-center">
-                        <p className="text-xs font-medium text-slate-600 mb-0.5">Status</p>
-                        <p className="text-xs font-bold text-orange-600">
+                        <p className="text-xs md:text-sm font-medium text-slate-600 mb-0.5 md:mb-1">Status</p>
+                        <p className="text-xs md:text-sm font-bold text-orange-600 uppercase">
                           {order.status}
                         </p>
                       </div>
@@ -330,16 +330,16 @@ const OrderHistoryPage = () => {
 
                     {/* Tracking Info */}
                     {(order.trackingNumber || order.deliveredAt) && (
-                      <div className="space-y-1 text-xs pt-1 border-t border-slate-100">
+                      <div className="space-y-1.5 md:space-y-2 text-xs md:text-sm pt-2.5 border-t border-slate-100">
                         {order.trackingNumber && (
                           <div className="flex items-center gap-1.5 text-slate-600">
-                            <Truck className="w-3 h-3 text-orange-500 shrink-0" />
+                            <Truck className="w-3 h-3 md:w-4 md:h-4 text-orange-500 shrink-0" />
                             <span className="font-mono text-slate-900 truncate">{order.trackingNumber}</span>
                           </div>
                         )}
                         {order.deliveredAt && (
                           <div className="flex items-center gap-1.5 text-green-600 font-medium">
-                            <CheckCircle2 className="w-3 h-3 shrink-0" />
+                            <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 shrink-0" />
                             Delivered {formatDate(order.deliveredAt)}
                           </div>
                         )}
@@ -352,91 +352,11 @@ const OrderHistoryPage = () => {
                         e.stopPropagation();
                         navigate(`/orders/${order.id}`);
                       }}
-                      className="w-full mt-2 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-600 font-semibold text-xs transition-all duration-300 group-hover:gap-2.5"
+                      className="w-full mt-1 flex items-center justify-center gap-1.5 px-3 py-1.5 md:py-2 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-600 font-semibold text-xs md:text-sm transition-all duration-300 group-hover:gap-2.5"
                     >
                       View Details
-                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                      <ArrowRight className="w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:translate-x-0.5" />
                     </button>
-                  </div>
-
-                  {/* Desktop Layout */}
-                  <div className="hidden md:block p-5">
-                    <div className="grid grid-cols-12 gap-4 items-center">
-                      {/* Order Info */}
-                      <div className="col-span-3">
-                        <h3 className="font-semibold text-sm text-slate-900 mb-1 truncate">
-                          {order.orderNumber}
-                        </h3>
-                        <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5">
-                          <Calendar className="w-4 h-4 shrink-0" />
-                          {formatDate(order.createdAt)}
-                        </div>
-                        {order.receiverName && (
-                          <p className="text-sm text-slate-600 font-medium truncate">
-                            {order.receiverName}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Stats */}
-                      <div className="col-span-2">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Items</p>
-                        <p className="text-lg font-bold text-slate-900">
-                          {order.itemCount || 0}
-                        </p>
-                      </div>
-
-                      <div className="col-span-2">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Amount</p>
-                        <p className="text-lg font-bold bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                          {formatAmount(order.totalAmount)}
-                        </p>
-                      </div>
-
-                      {/* Status */}
-                      <div className="col-span-2">
-                        <Badge
-                          variant={getStatusColor(order.status)}
-                          size="sm"
-                          className="flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm w-full"
-                        >
-                          {getStatusIcon(order.status)}
-                          {formatStatus(order.status)}
-                        </Badge>
-                      </div>
-
-                      {/* Action */}
-                      <div className="col-span-3">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/orders/${order.id}`);
-                          }}
-                          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-600 font-semibold text-sm transition-all duration-300 group-hover:gap-3"
-                        >
-                          View Details
-                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Tracking Info */}
-                    {(order.trackingNumber || order.deliveredAt) && (
-                      <div className="mt-3.5 pt-3.5 border-t border-slate-100 flex gap-6 text-sm">
-                        {order.trackingNumber && (
-                          <div className="flex items-center gap-2 text-slate-600">
-                            <Truck className="w-4 h-4 text-orange-500 shrink-0" />
-                            <span className="font-mono font-semibold text-slate-900">{order.trackingNumber}</span>
-                          </div>
-                        )}
-                        {order.deliveredAt && (
-                          <div className="flex items-center gap-2 text-green-600 font-medium">
-                            <CheckCircle2 className="w-4 h-4 shrink-0" />
-                            Delivered {formatDate(order.deliveredAt)}
-                          </div>
-                        )}
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

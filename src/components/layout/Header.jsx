@@ -158,7 +158,7 @@ export const Header = () => {
                   >
                     <button 
                       onClick={() => setIsProfileOpen(!isProfileOpen)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-100 transition-all duration-300"
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-400 transition-all duration-300"
                     >
                       <Avatar size="sm" name={user?.email || 'User'} />
                       <span className="text-sm font-bold text-slate-700 hidden lg:block">
@@ -244,7 +244,7 @@ export const Header = () => {
                 className="md:hidden p-2 hover:bg-orange-100 rounded-lg transition-all"
                 aria-label="Open menu"
               >
-                <FiMenu className="w-6 h-6 text-slate-700" />
+                <FiMenu className="w-6 h-6  text-slate-700" />
               </button>
             </div>
           </div>

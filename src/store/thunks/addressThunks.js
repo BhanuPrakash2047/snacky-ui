@@ -21,8 +21,10 @@ export const fetchAddresses = createAsyncThunk(
 // ADD ADDRESS
 export const addAddress = createAsyncThunk(
   'addresses/add',
-  async ({ fullName, phoneNumber, addressLine1, addressLine2, city, state, zipCode, country, isDefault }, { rejectWithValue }) => {
+  async (addressData, { rejectWithValue }) => {
     try {
+      const { fullName, phoneNumber, addressLine1, city, state, zipCode, country = 'India', isDefault = false } = addressData;
+      
       // Client-side validation
       if (!fullName || !fullName.trim()) {
         return rejectWithValue('Full name is required');
@@ -33,6 +35,12 @@ export const addAddress = createAsyncThunk(
       if (!addressLine1 || !addressLine1.trim()) {
         return rejectWithValue('Address is required');
       }
+      if (!city || !city.trim()) {
+        return rejectWithValue('City is required');
+      }
+      if (!state || !state.trim()) {
+        return rejectWithValue('State is required');
+      }
       if (!zipCode || !zipCode.trim()) {
         return rejectWithValue('Zip code is required');
       }
@@ -41,11 +49,10 @@ export const addAddress = createAsyncThunk(
         fullName: fullName.trim(),
         phoneNumber: phoneNumber.trim(),
         addressLine1: addressLine1.trim(),
-        addressLine2: addressLine2?.trim() || null,
-        city: city?.trim() || null,
-        state: state?.trim() || null,
+        city: city.trim(),
+        state: state.trim(),
         zipCode: zipCode.trim(),
-        country: country?.trim() || 'India',
+        country: country || 'India',
         isDefault: isDefault || false
       });
       return response.data;
@@ -62,8 +69,14 @@ export const addAddress = createAsyncThunk(
 // UPDATE ADDRESS
 export const updateAddress = createAsyncThunk(
   'addresses/update',
-  async ({ addressId, fullName, phoneNumber, addressLine1, addressLine2, city, state, zipCode, country, isDefault }, { rejectWithValue }) => {
+  async (addressData, { rejectWithValue }) => {
     try {
+      const { addressId, fullName, phoneNumber, addressLine1, city, state, zipCode, country = 'India', isDefault = false } = addressData;
+      
+      if (!addressId) {
+        return rejectWithValue('Address ID is required');
+      }
+      
       // Client-side validation
       if (fullName && !fullName.trim()) {
         return rejectWithValue('Full name cannot be empty');
@@ -82,11 +95,10 @@ export const updateAddress = createAsyncThunk(
         fullName: fullName?.trim(),
         phoneNumber: phoneNumber?.trim(),
         addressLine1: addressLine1?.trim(),
-        addressLine2: addressLine2?.trim() || null,
-        city: city?.trim() || null,
-        state: state?.trim() || null,
+        city: city?.trim(),
+        state: state?.trim(),
         zipCode: zipCode?.trim(),
-        country: country?.trim() || 'India',
+        country: country || 'India',
         isDefault
       });
       return response.data;
