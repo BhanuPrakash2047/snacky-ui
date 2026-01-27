@@ -371,7 +371,7 @@ const CheckoutPage = () => {
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-white">
       <Header />
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-12 pt-18 lg:pt-24">
         <h1 className="text-3xl font-bold text-slate-900 mb-12">Checkout</h1>
 
         {/* Error Alert */}
@@ -403,7 +403,7 @@ const CheckoutPage = () => {
                   <Button
                     onClick={handleAddAddress}
                     variant="primary"
-                    className="inline-flex items-center gap-2"
+                    className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700"
                   >
                     <Plus className="w-4 h-4 bg-orange-600 hover:bg-orange-700" />
                     Add Your First Address

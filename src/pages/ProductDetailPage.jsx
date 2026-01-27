@@ -155,7 +155,7 @@ const ProductDetailPage = () => {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
         <Header />
-        <div className="flex-1 flex flex-col items-center justify-center gap-4">
+        <div className="flex-1 flex flex-col items-center justify-center gap-4 pt-18 lg:pt-24">
           <Spinner size="lg" />
           <p className="text-slate-600 font-medium">Loading product details...</p>
         </div>
@@ -168,7 +168,7 @@ const ProductDetailPage = () => {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
         <Header />
-        <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="flex-1 flex flex-col items-center justify-center pt-18 lg:pt-24">
           <div className="text-center">
             <p className="text-2xl font-bold text-slate-900 mb-4">Product not found</p>
             <Button onClick={() => navigate('/products')}>
@@ -192,7 +192,7 @@ const ProductDetailPage = () => {
     <div className="min-h-screen bg-white">
       <Header />
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-8 pt-18 lg:pt-24">
         {/* Breadcrumb */}
         <button
           onClick={() => navigate('/products')}

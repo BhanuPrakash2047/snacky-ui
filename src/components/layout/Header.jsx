@@ -2,12 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Badge, Avatar, Drawer } from '../common';
-import { FiShoppingCart, FiUser, FiMenu, FiX, FiHome, FiPackage, FiLogOut, FiSearch } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiMenu, FiX, FiHome, FiPackage, FiLogOut, FiSearch, FiChevronDown } from 'react-icons/fi';
 import { Heart, Bell, Zap } from 'lucide-react';
 import { getUnreadNotificationCount } from '../../store/thunks/notificationThunks';
-import {  logoutUser } from '@/store/thunks/authThunks';
+import { logoutUser } from '@/store/thunks/authThunks';
 import { showToast } from '@/utils/toast';
 import { useNavigate } from 'react-router-dom';
+
 export const Header = () => {
   const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -61,251 +62,236 @@ export const Header = () => {
 
   return (
     <>
-
-
-      {/* MAIN HEADER */}
-      <header className="bg-gradient-to-b from-white to-orange-50/40 border-b-2 border-orange-100 shadow-lg sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 md:h-20 gap-2 md:gap-4">
+      {/* MAIN HEADER - Professional & Clean Design */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Top Bar */}
+          <div className="flex items-center justify-between h-16 lg:h-20">
             
-            {/* LOGO/BRAND - PREMIUM STYLE */}
+            {/* Logo Section - Simplified & Professional */}
             <Link
               to="/"
-              className="flex items-center gap-2 group transition-all duration-300 hover:scale-105 flex-shrink-0"
+              className="flex items-center gap-3 group transition-transform duration-200 hover:scale-[1.02]"
             >
               <div className="relative">
-                {/* Animated Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl blur-lg opacity-75 group-hover:opacity-100 transition-opacity animate-pulse"></div>
-                {/* Logo Container */}
-                <div className="relative p-1.5 rounded-s-lg">
-                  <img 
-                    src="/Logo1.png" 
-                    alt="Snacky Logo" 
-                    className="w-8 h-8 md:w-12 md:h-12 rounded-xl object-cover"
-                  />
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 p-0.5 shadow-md group-hover:shadow-lg transition-shadow">
+                  <div className="w-full h-full rounded-xl bg-white p-1.5">
+                    <img 
+                      src="/Logo1.png" 
+                      alt="Snacky Logo" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col flex-shrink-0">
-                <span className="text-base md:text-2xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">SNACKY</span>
-                <span className="text-xs font-bold text-orange-600 uppercase tracking-widest hidden md:inline">Crunch & Munch</span>
+              <div>
+                <span className="block text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">
+                  SNACKY
+                </span>
+                <span className="hidden sm:block text-[10px] lg:text-xs font-medium text-orange-600 tracking-wider">
+                  Premium Snacks
+                </span>
               </div>
             </Link>
 
-            {/* SEARCH BAR - CENTER (Desktop Only) */}
-            {/* <div className="hidden md:flex flex-1 mx-8 max-w-md">
-              <div className={`w-full relative transition-all duration-300 ${searchFocus ? 'scale-105' : ''}`}>
-                <FiSearch className={`absolute left-4 top-3.5 w-5 h-5 transition-colors ${searchFocus ? 'text-orange-600' : 'text-slate-400'}`} />
-                <input
-                  type="text"
-                  placeholder="Search snacks..."
-                  onFocus={() => setSearchFocus(true)}
-                  onBlur={() => setSearchFocus(false)}
-                  className={`w-full pl-12 pr-4 py-2.5 rounded-xl border-2 transition-all duration-300 ${
-                    searchFocus
-                      ? 'border-orange-500 bg-white shadow-lg'
-                      : 'border-slate-200 bg-slate-50 hover:border-orange-300'
-                  } focus:outline-none text-sm font-medium`}
-                />
-                {searchFocus && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl p-3 z-50">
-                    <p className="text-xs text-slate-500 text-center">🔍 Search for your favorite snacks...</p>
-                  </div>
-                )}
-              </div>
-            </div> */}
+            {/* Center Navigation - Desktop Only */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+              {navLinks.map(({ label, href }) => (
+                <Link
+                  key={href}
+                  to={href}
+                  className="relative px-4 py-2 text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors duration-200 group"
+                >
+                  {label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-300" />
+                </Link>
+              ))}
+            </nav>
 
-            {/* RIGHT SIDE - ACTIONS */}
-            <div className="flex items-center gap-1 md:gap-4">
+            {/* Right Actions */}
+            <div className="flex items-center gap-2 lg:gap-4">
               
-              {/* NOTIFICATIONS */}
-              <Link
-                to="/notifications"
-                className="flex items-center justify-center relative group transition-all duration-300 hover:scale-110"
-              >
-                <div className="relative p-1.5 md:p-2 rounded-lg hover:bg-orange-100 transition-colors">
-                  <Bell className="w-5 md:w-6 h-5 md:h-6 text-slate-600 group-hover:text-orange-600 transition-colors" />
+              {/* Notifications */}
+              {isAuthenticated && (
+                <Link
+                  to="/notifications"
+                  className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
+                >
+                  <Bell className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" />
                   {unreadCount > 0 && (
-                    <span className="absolute top-0 -right-1.5 min-w-5 h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full shadow-lg animate-bounce">
+                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded-full">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
-                </div>
-              </Link>
+                </Link>
+              )}
 
-              {/* CART ICON - Premium Style */}
+              {/* Cart */}
               <Link
                 to="/cart"
-                className="relative group transition-all duration-300 hover:scale-110"
+                className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
               >
-                <div className="p-2 rounded-lg hover:bg-orange-100 transition-colors">
-                  <div className="relative">
-                    <FiShoppingCart className="w-6 h-6 text-slate-600 group-hover:text-orange-600 transition-colors" />
-                    {cartCount > 0 && (
-                      <div className="absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-bounce">
-                        {cartCount}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <FiShoppingCart className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-500 text-white text-[10px] font-bold rounded-full">
+                    {cartCount}
+                  </span>
+                )}
               </Link>
 
-              {/* AUTH - Desktop */}
+              {/* Desktop Auth */}
               {isAuthenticated ? (
-                <div className="hidden md:flex items-center gap-4 ml-2 pl-4 border-l-2 border-orange-200">
-                  <div 
-                    className="relative"
-                    ref={profileMenuRef}
+                <div className="hidden lg:block relative " ref={profileMenuRef}>
+                  <button 
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200 bg-gradient-to-r from-orange-500 to-red-600"
                   >
-                    <button 
-                      onClick={() => setIsProfileOpen(!isProfileOpen)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-400 transition-all duration-300"
-                    >
-                      <Avatar size="sm" name={user?.email || 'User'} />
-                      <span className="text-sm font-bold text-slate-700 hidden lg:block">
-                        {user?.name?.split(' ')[0]}
-                      </span>
-                      <Zap className="w-4 h-4 text-blue-100 hover:opacity-100 transition-opacity" />
-                    </button>
+                    <Avatar size="sm" name={user?.email || 'User'} />
+                    <span className="hidden xl:block text-sm font-medium text-gray-700 max-w-[100px] truncate">
+                      {user?.name?.split(' ')[0]}
+                    </span>
+                    <FiChevronDown className={`w-4 h-4 text-amber-50 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
+                  </button>
 
-                    {/* Premium Dropdown */}
-                    <div className={`absolute right-0 top-full mt-3 w-56 bg-white rounded-2xl shadow-2xl border-2 border-orange-100 overflow-hidden transition-all duration-300 ${
-                      isProfileOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-                    }`}>
-                      {/* Dropdown Header */}
-                      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-3">
-                        <p className="font-bold">{user?.name}</p>
-                        <p className="text-xs opacity-90">{user?.email}</p>
+                  {/* Profile Dropdown */}
+                  {isProfileOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                      {/* User Info */}
+                      <div className="px-4 py-3 bg-gradient-to-r from-orange-500 to-red-500">
+                        <p className="font-semibold text-white truncate">{user?.name}</p>
+                        <p className="text-xs text-white/90 truncate">{user?.email}</p>
                       </div>
 
-                      {/* Dropdown Items */}
-                      <div className="p-2 space-y-1">
+                      {/* Menu Items */}
+                      <div className="py-2">
                         <Link
                           to="/profile"
-                          className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                         >
-                          <FiUser className="w-4 h-4" /> My Profile
+                          <FiUser className="w-4 h-4" />
+                          My Profile
                         </Link>
                         <Link
                           to="/notifications"
-                          className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm relative"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                         >
-                          <Bell className="w-4 h-4" /> Notifications
+                          <Bell className="w-4 h-4" />
+                          Notifications
                           {unreadCount > 0 && (
-                            <Badge variant="danger" className="ml-auto text-xs">
+                            <span className="ml-auto text-xs font-bold text-white bg-red-500 px-1.5 py-0.5 rounded-full">
                               {unreadCount}
-                            </Badge>
+                            </span>
                           )}
                         </Link>
                         <Link
                           to="/orders"
-                          className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                         >
-                          <FiPackage className="w-4 h-4" /> My Orders
+                          <FiPackage className="w-4 h-4" />
+                          My Orders
                         </Link>
                         <Link
                           to="/cart"
-                          className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                         >
-                          <FiShoppingCart className="w-4 h-4" /> My Cart
+                          <FiShoppingCart className="w-4 h-4" />
+                          My Cart
                         </Link>
                       </div>
 
-                      <div className="border-t-2 border-orange-100 p-2">
+                      {/* Logout */}
+                      <div className="border-t border-gray-100 py-2">
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all font-semibold text-sm"
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
                         >
-                          <FiLogOut className="w-4 h-4" /> Logout
+                          <FiLogOut className="w-4 h-4" />
+                          Logout
                         </button>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ) : (
-                <div className="hidden md:flex gap-2 ml-2 pl-4 border-l-2 border-orange-200">
+                <div className="hidden lg:flex items-center gap-2">
                   <Button 
                     asChild 
-                    className="!px-4 !py-2 !text-sm border-2 bg-gradient-to-r from-orange-500 to-red-500 text-orange-600 hover:bg-orange-50 font-bold transition-all"
+                    className="!px-4 !py-2 !text-sm !font-medium !bg-white !text-gray-700 !border !border-gray-200 hover:!bg-gray-50 !rounded-lg transition-colors"
                   >
                     <Link to="/login">Login</Link>
                   </Button>
                   <Button 
                     asChild 
-                    className="!px-4 !py-2 !text-sm bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold hover:shadow-lg transition-all"
+                    className="!px-4 !py-2 !text-sm !font-medium !bg-gradient-to-r !from-orange-500 !to-red-500 !text-white !rounded-lg hover:!shadow-md transition-all"
                   >
                     <Link to="/signup">Sign Up</Link>
                   </Button>
                 </div>
               )}
 
-              {/* HAMBURGER MENU - Mobile */}
+              {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="md:hidden p-2 hover:bg-orange-100 rounded-lg transition-all"
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
                 aria-label="Open menu"
               >
-                <FiMenu className="w-6 h-6  text-slate-700" />
+                <FiMenu className="w-6 h-6 text-gray-700" />
               </button>
             </div>
           </div>
-
-          {/* DESKTOP NAV - Optimized */}
-          <nav className="hidden md:flex items-center gap-4 md:gap-8 pb-3 md:pb-4 pt-2 border-t-2 border-orange-100/50">
-            {navLinks.map(({ label, href }) => (
-              <Link
-                key={href}
-                to={href}
-                className="text-slate-700 font-bold hover:text-orange-600 transition-colors duration-300 relative group text-sm uppercase tracking-wide"
-              >
-                {label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
-            <div className="ml-auto flex items-center gap-2 text-xs font-bold text-orange-600 bg-orange-50 px-3 py-1.5 rounded-full">
-              <Zap className="w-3 h-3" /> FLASH SALE LIVE
-            </div>
-          </nav>
         </div>
       </header>
 
-      {/* MOBILE DRAWER - Enhanced */}
+      {/* MOBILE DRAWER - Clean & Professional */}
       <Drawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        title="🍿 SNACKY"
+        title="Menu"
         side="right"
         width="w-80"
       >
-        {/* Drawer Header - Minimal, Professional */}
-        <div className="bg-white border-b border-slate-200 px-4 py-4 -m-6 mb-0 rounded-none flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-slate-900">SNACKY</h2>
-            <p className="text-xs text-slate-500">Crunch & Munch</p>
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 -m-6 mb-6 bg-white">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 p-0.5">
+              <div className="w-full h-full rounded-lg bg-white p-1.5">
+                <img 
+                  src="/Logo1.png" 
+                  alt="Snacky Logo" 
+                  className="w-full h-full object-cover rounded"
+                />
+              </div>
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">SNACKY</h2>
+              <p className="text-xs text-gray-500">Premium Snacks</p>
+            </div>
           </div>
           <button
             onClick={() => setIsDrawerOpen(false)}
-            className="text-slate-400 hover:text-slate-600 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="Close menu"
           >
-            <FiX className="w-5 h-5" />
+            <FiX className="w-5 h-5 text-gray-500" />
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 p-4">
-          {/* Search - Mobile */}
-          {/* <div className="mb-3 px-0">
-            <div className="relative">
-              <FiSearch className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search snacks..."
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 focus:border-orange-500 focus:outline-none text-sm"
-              />
-            </div>
-          </div> */}
-
-          {/* Divider */}
-          <div className="h-px bg-slate-200 my-2"></div>
+        {/* Drawer Content */}
+        <nav className="flex flex-col gap-1">
+          {/* User Info - If Authenticated */}
+          {isAuthenticated && (
+            <>
+              <div className="px-4 py-3 mb-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500">
+                <p className="font-semibold text-white text-sm truncate">{user?.name}</p>
+                <p className="text-xs text-white/90 truncate">{user?.email}</p>
+              </div>
+              <div className="h-px bg-gray-100 my-2" />
+            </>
+          )}
 
           {/* Navigation Links */}
           {navLinks.map(({ label, href, icon: Icon }) => (
@@ -313,87 +299,95 @@ export const Header = () => {
               key={href}
               to={href}
               onClick={() => setIsDrawerOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
+              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors"
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-5 h-5" />
               {label}
             </Link>
           ))}
 
-          {/* Divider */}
-          <div className="h-px bg-slate-200 my-2"></div>
-
           {isAuthenticated ? (
             <>
-              {/* User Profile Section - Compact */}
-              <div className="bg-slate-100 rounded-lg p-2.5 mb-3">
-                <p className="font-semibold text-slate-900 text-xs truncate">{user?.name}</p>
-                <p className="text-xs text-slate-600 truncate">{user?.email}</p>
-              </div>
-
+              <div className="h-px bg-gray-100 my-2" />
+              
               <Link
                 to="/profile"
                 onClick={() => setIsDrawerOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors"
               >
-                <FiUser className="w-4 h-4" />
+                <FiUser className="w-5 h-5" />
                 My Profile
+              </Link>
+              <Link
+                to="/notifications"
+                onClick={() => setIsDrawerOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors"
+              >
+                <Bell className="w-5 h-5" />
+                Notifications
+                {unreadCount > 0 && (
+                  <span className="ml-auto text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">
+                    {unreadCount}
+                  </span>
+                )}
               </Link>
               <Link
                 to="/orders"
                 onClick={() => setIsDrawerOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors"
               >
-                <FiPackage className="w-4 h-4" />
+                <FiPackage className="w-5 h-5" />
                 My Orders
               </Link>
               <Link
                 to="/cart"
                 onClick={() => setIsDrawerOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all font-semibold text-sm relative"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors"
               >
-                <FiShoppingCart className="w-4 h-4" />
+                <FiShoppingCart className="w-5 h-5" />
                 My Cart
                 {cartCount > 0 && (
-                  <span className="absolute right-3 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  <span className="ml-auto text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              {/* Divider */}
-              <div className="h-px bg-slate-200 my-2"></div>
+              <div className="h-px bg-gray-100 my-2" />
 
               <button
                 onClick={() => {
                   handleLogout();
                   setIsDrawerOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-all font-semibold text-sm"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
               >
-                <FiLogOut className="w-4 h-4" />
+                <FiLogOut className="w-5 h-5" />
                 Logout
               </button>
             </>
           ) : (
-            <div className="space-y-2 mt-3">
-              <Button 
-                asChild 
-                className="w-full !border-2 !border-orange-300 !text-orange-600 !bg-white !font-semibold hover:!bg-orange-50 text-sm py-2"
-              >
-                <Link to="/login" onClick={() => setIsDrawerOpen(false)}>
-                  Login
-                </Link>
-              </Button>
-              <Button 
-                asChild 
-                className="w-full !bg-gradient-to-r !from-orange-500 !to-red-500 !text-white !font-semibold text-sm py-2"
-              >
-                <Link to="/signup" onClick={() => setIsDrawerOpen(false)}>
-                  Sign Up
-                </Link>
-              </Button>
-            </div>
+            <>
+              <div className="h-px bg-gray-100 my-4" />
+              <div className="space-y-2">
+                <Button 
+                  asChild 
+                  className="w-full !bg-white !text-gray-700 !border !border-gray-200 hover:!bg-gray-50 !font-medium !rounded-lg"
+                >
+                  <Link to="/login" onClick={() => setIsDrawerOpen(false)}>
+                    Login
+                  </Link>
+                </Button>
+                <Button 
+                  asChild 
+                  className="w-full !bg-gradient-to-r !from-orange-500 !to-red-500 !text-white !font-medium !rounded-lg"
+                >
+                  <Link to="/signup" onClick={() => setIsDrawerOpen(false)}>
+                    Sign Up
+                  </Link>
+                </Button>
+              </div>
+            </>
           )}
         </nav>
       </Drawer>

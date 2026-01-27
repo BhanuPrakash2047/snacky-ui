@@ -138,7 +138,7 @@ export const HomePage = () => {
       <Header />
 
       {/* ULTRA PREMIUM HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-orange-50/30 to-white pt-8 pb-12 md:pt-24 md:pb-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-orange-50/30 to-white  pb-12 md:pt-24 md:pb-32 pt-18 lg:pt-24">
         {/* Sophisticated Background Elements */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div 

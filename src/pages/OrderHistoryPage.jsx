@@ -129,7 +129,7 @@ const OrderHistoryPage = () => {
     return (
       <div className="min-h-screen bg-linear-to-b from-orange-50 via-white to-emerald-50 flex flex-col">
         <Header />
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center pt-18 lg:pt-24">
           <div className="text-center">
             <div className="relative w-20 h-20 mb-6 mx-auto">
               <div className="absolute inset-0 bg-linear-to-r from-orange-400 to-red-400 rounded-full animate-spin opacity-75"></div>
@@ -173,7 +173,7 @@ const OrderHistoryPage = () => {
       <Header />
 
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-6 pb-8 md:pt-12 md:pb-16">
+      <section className="relative overflow-hidden pt-6 pb-8 md:pt-12 md:pb-16 pt-18 lg:pt-24">
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-orange-400/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
@@ -251,8 +251,8 @@ const OrderHistoryPage = () => {
                   ? 'Start your snacking journey by placing your first order!'
                   : 'Try adjusting your search or filter to find what you\'re looking for'}
               </p>
-              <Button onClick={() => navigate('/products')} variant="primary" size="lg" className="text-xs md:text-base">
-                <Package className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+              <Button onClick={() => navigate('/products')} variant="primary" size="lg" className="text-xs md:text-base bg-orange-500 hover:bg-orange-600">
+                <Package className="w-4 h-4 md:w-5 md:h-5 mr-2 " />
                 Start Shopping
               </Button>
             </Card>

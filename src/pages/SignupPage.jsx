@@ -115,7 +115,7 @@ const SignupPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-orange-50">
       <Header />
 
-      <div className="max-w-6xl mx-auto px-4 py-8 lg:py-12">
+      <div className="max-w-6xl mx-auto px-4 py-8 lg:py-12 pt-18 lg:pt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px]">
           {/* Left Side - Branding (Visible on all screens) */}
           <div className="order-2 lg:order-1">

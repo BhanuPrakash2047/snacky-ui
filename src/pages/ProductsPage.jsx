@@ -92,7 +92,7 @@ const ProductsPage = () => {
       <Header />
 
       {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-hidden pt-16 pb-4">
+      <section className="relative overflow-hidden  pb-4 pt-18 lg:pt-24">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-400/40 rounded-full blur-3xl animate-pulse"></div>

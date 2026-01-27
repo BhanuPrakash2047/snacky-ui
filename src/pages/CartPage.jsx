@@ -131,7 +131,7 @@ const CartPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-orange-50 via-white to-emerald-50 flex flex-col">
+      <div className="min-h-screen bg-linear-to-b from-orange-50 via-white to-emerald-50 flex flex-col pt-18 lg:pt-24">
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -186,7 +186,7 @@ const CartPage = () => {
       <Header />
 
       {/* HERO SECTION - Compact Mobile */}
-      <section className="relative overflow-hidden pt-4 pb-4 md:pt-12 md:pb-16">
+      <section className="relative overflow-hidden pt-4 pb-4 md:pt-12 md:pb-16  pt-18 lg:pt-24">
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-orange-400/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
@@ -213,17 +213,74 @@ const CartPage = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {safeCartItems.length === 0 ? (
             // Empty Cart
-            <div className="relative group max-w-2xl mx-auto">
-              <div className="absolute -inset-1 bg-linear-to-r from-orange-600 via-red-500 to-emerald-600 rounded-3xl blur-lg opacity-75 group-hover:opacity-100 transition duration-1000"></div>
-              <div className="relative bg-white rounded-3xl p-6 md:p-16 text-center">
-                <div className="text-7xl md:text-8xl mb-6 animate-bounce">🛍️</div>
-                <h2 className="text-2xl md:text-4xl font-black text-slate-900 mb-3">Cart is Empty</h2>
-                <p className="text-sm md:text-lg text-slate-600 mb-8">
-                  Time to fill your cart with amazing snacks! Let's start shopping 🍿
-                </p>
-                <Button onClick={handleContinueShopping} className="bg-linear-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold px-8 py-4 rounded-xl">
-                  Explore Products
-                </Button>
+            <div className="relative max-w-2xl mx-auto">
+              {/* Animated Gradient Background Orb */}
+              <div className="absolute -inset-8 bg-gradient-to-r from-orange-400/20 via-red-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse"></div>
+              
+              {/* Main Card */}
+              <div className="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+                {/* Decorative Top Border */}
+                <div className="h-1.5 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500"></div>
+                
+                {/* Content */}
+                <div className="p-8 md:p-16 text-center">
+                  {/* Animated Icon Container */}
+                  <div className="relative inline-block mb-8">
+                    {/* Background Circle with Pulse */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-red-100 rounded-full animate-ping opacity-20"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-50 rounded-full"></div>
+                    
+                    {/* Icon */}
+                    <div className="relative text-7xl md:text-8xl transform hover:scale-110 transition-transform duration-300 p-8">
+                      🛍️
+                    </div>
+                  </div>
+
+                  {/* Heading */}
+                  <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+                    Your Cart is Empty
+                  </h2>
+                  
+                  {/* Subheading */}
+                  <p className="text-base md:text-lg text-gray-600 mb-10 max-w-md mx-auto leading-relaxed">
+                    Discover our collection of delicious snacks and treats. Your perfect snack is waiting! 🍿✨
+                  </p>
+
+                  {/* CTA Button */}
+                  <Button 
+                    onClick={handleContinueShopping} 
+                    className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <span>Explore Products</span>
+                    <svg 
+                      className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </Button>
+
+                  {/* Decorative Features Grid */}
+                  <div className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-gray-100">
+                    <div className="text-center">
+                      <div className="text-2xl mb-2">🚚</div>
+                      <p className="text-xs text-gray-600 font-medium">Free Delivery</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl mb-2">⭐</div>
+                      <p className="text-xs text-gray-600 font-medium">Premium Quality</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl mb-2">💳</div>
+                      <p className="text-xs text-gray-600 font-medium">Secure Payment</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Decorative Wave */}
+                <div className="h-2 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-pink-500/10"></div>
               </div>
             </div>
           ) : (
