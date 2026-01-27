@@ -315,66 +315,79 @@ const NotificationsPage = () => {
                       : 'bg-white hover:shadow-sm'
                   }`}
                 >
+                  {/* Mobile-optimized layout */}
                   <div className="p-4 lg:p-5">
-                    <div className="flex items-start gap-3 lg:gap-4">
-                      
-                      {/* Icon */}
-                      <div className="flex-shrink-0">
-                        <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100">
-                          {getNotificationIcon(notification.type)}
+                    {/* Header row with icon and unread indicator */}
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        {/* Icon */}
+                        <div className="flex-shrink-0">
+                          <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100">
+                            {getNotificationIcon(notification.type)}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-3 mb-2">
-                          <h3 className={`font-semibold text-base lg:text-lg pr-2 ${
+                        {/* Title */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className={`font-semibold text-sm sm:text-base lg:text-lg leading-snug ${
                             !notification.isRead ? 'text-gray-900' : 'text-gray-700'
                           }`}>
                             {notification.title}
                           </h3>
-                          {!notification.isRead && (
-                            <div className="flex-shrink-0 w-2 h-2 rounded-full bg-orange-500 mt-2"></div>
-                          )}
                         </div>
+                      </div>
 
-                        <p className="text-sm lg:text-base text-gray-600 mb-3 pr-12">
-                          {notification.message}
-                        </p>
+                      {/* Unread dot */}
+                      {!notification.isRead && (
+                        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-orange-500 mt-1.5"></div>
+                      )}
+                    </div>
 
-                        {/* Meta Info */}
-                        <div className="flex flex-wrap items-center gap-2 lg:gap-3">
-                          <Badge variant={getTypeColor(notification.type)} size="sm">
-                            {notification.type?.replace(/_/g, ' ')}
-                          </Badge>
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>{formatDate(notification.createdAt)}</span>
-                          </div>
+                    {/* Message - Full width for better readability */}
+                    <div className="mb-3 pl-0 sm:pl-11">
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed break-words">
+                        {notification.message}
+                      </p>
+                    </div>
+
+                    {/* Footer with meta info and actions */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pl-0 sm:pl-11">
+                      {/* Meta Info */}
+                      <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+                        <Badge variant={getTypeColor(notification.type)} size="sm">
+                          {notification.type?.replace(/_/g, ' ')}
+                        </Badge>
+                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                          <Clock className="w-3 h-3" />
+                          <span>{formatDate(notification.createdAt)}</span>
                         </div>
                       </div>
 
                       {/* Actions */}
-                      <div className="flex items-start gap-1 flex-shrink-0">
+                      <div className="flex items-center gap-2">
                         {!notification.isRead && (
                           <button
                             onClick={() => handleMarkAsRead(notification.id, notification.isRead)}
-                            className="p-2 rounded-lg text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors"
                             title="Mark as read"
                           >
-                            <Check className="w-4 h-4 lg:w-5 lg:h-5" />
+                            <Check className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Mark Read</span>
                           </button>
                         )}
                         <button
                           onClick={() => handleDelete(notification.id)}
                           disabled={deleting[notification.id]}
-                          className="p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-colors disabled:opacity-50"
                           title="Delete"
                         >
                           {deleting[notification.id] ? (
-                            <Spinner className="w-4 h-4 lg:w-5 lg:h-5" />
+                            <Spinner className="w-3.5 h-3.5" />
                           ) : (
-                            <Trash2 className="w-4 h-4 lg:w-5 lg:h-5" />
+                            <>
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span className="hidden sm:inline">Delete</span>
+                            </>
                           )}
                         </button>
                       </div>
