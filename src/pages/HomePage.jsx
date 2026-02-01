@@ -266,21 +266,17 @@ export const HomePage = () => {
       </section>
 
       {/* URGENCY BANNER */}
-      {/* <section className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 py-3 md:py-4">
+      <section className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 py-3 md:py-4">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-center gap-3 md:gap-6 text-white text-center flex-wrap">
             <div className="flex items-center gap-2">
               <Clock className="w-5 h-5 animate-pulse" />
-              <span className="text-sm md:text-base font-bold">Limited Time: Free Delivery on Orders ₹500+</span>
+              <span className="text-sm md:text-base font-bold">Free Delivery on Every Order</span>
             </div>
-            <div className="hidden md:block w-px h-6 bg-white/30"></div>
-            <div className="flex items-center gap-2">
-              <Package className="w-5 h-5" />
-              <span className="text-sm md:text-base font-semibold">Same Day Delivery Available</span>
             </div>
-          </div>
+            
         </div>
-      </section> */}
+      </section>
 
       {/* FEATURED PRODUCTS SECTION */}
       <section className="py-16 md:py-24 bg-white relative">
