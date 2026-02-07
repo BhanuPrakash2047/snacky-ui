@@ -8,6 +8,7 @@ import deliveryReducer, { resetDelivery } from './slices/deliverySlice';
 import couponReducer, { resetCoupon } from './slices/couponSlice';
 import notificationReducer, { resetNotifications } from './slices/notificationSlice';
 import addressReducer, { resetAddress } from './slices/addressSlice';
+import adminReducer, { resetAdmin } from './slices/adminSlice';
 import { logoutUser } from './thunks/authThunks';
 
 // Middleware to reset all user-specific data on logout
@@ -23,6 +24,7 @@ const logoutMiddleware = store => next => action => {
     store.dispatch(resetDelivery());
     store.dispatch(resetNotifications());
     store.dispatch(resetCoupon());
+    store.dispatch(resetAdmin());
   }
   
   return result;
@@ -38,7 +40,8 @@ export const store = configureStore({
     delivery: deliveryReducer,
     coupons: couponReducer,
     notifications: notificationReducer,
-    addresses: addressReducer
+    addresses: addressReducer,
+    admin: adminReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(logoutMiddleware)

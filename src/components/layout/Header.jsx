@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Badge, Avatar, Drawer } from '../common';
 import { FiShoppingCart, FiUser, FiMenu, FiX, FiHome, FiPackage, FiLogOut, FiSearch, FiChevronDown } from 'react-icons/fi';
-import { Heart, Bell, Zap } from 'lucide-react';
+import { Heart, Bell, Zap, BarChart3 } from 'lucide-react';
 import { getUnreadNotificationCount } from '../../store/thunks/notificationThunks';
 import { logoutUser } from '@/store/thunks/authThunks';
 import { showToast } from '@/utils/toast';
@@ -164,6 +164,17 @@ export const Header = () => {
 
                       {/* Menu Items */}
                       <div className="py-2">
+                        {/* Admin Dashboard - Only for ADMIN users */}
+                        {user?.role === 'ADMIN' && (
+                          <Link
+                            to="/admin"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-orange-600 hover:bg-orange-50 transition-colors border-b border-gray-100 mb-1"
+                          >
+                            <BarChart3 className="w-4 h-4" />
+                            Admin Dashboard
+                          </Link>
+                        )}
                         <Link
                           to="/profile"
                           onClick={() => setIsProfileOpen(false)}
@@ -309,6 +320,18 @@ export const Header = () => {
           {isAuthenticated ? (
             <>
               <div className="h-px bg-gray-100 my-2" />
+              
+              {/* Admin Dashboard - Only for ADMIN users */}
+              {user?.role === 'ADMIN' && (
+                <Link
+                  to="/admin"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors mb-2"
+                >
+                  <BarChart3 className="w-5 h-5" />
+                  Admin Dashboard
+                </Link>
+              )}
               
               <Link
                 to="/profile"

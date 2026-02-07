@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
   ArrowLeft, Package, MapPin, Phone, Mail, Calendar, 
-  Truck, CheckCircle2, Clock, AlertCircle, Zap, Download 
+  Truck, CheckCircle2, Clock, AlertCircle, Zap, Download,
+  MapPinned, RefreshCw, CircleDot
 } from 'lucide-react';
 import { Header, Footer } from '@/components/layout';
 import { Button, Card, Spinner, Badge } from '@/components/common';
@@ -21,6 +22,9 @@ const OrderDetailPage = () => {
   const [showTrackingModal, setShowTrackingModal] = useState(false);
   const [address, setAddress] = useState(null);
   const [loadingAddress, setLoadingAddress] = useState(false);
+  const [trackingData, setTrackingData] = useState(null);
+  const [trackingLoading, setTrackingLoading] = useState(false);
+  const [trackingError, setTrackingError] = useState(null);
 
   useEffect(() => {
     if (orderId) {
@@ -49,6 +53,30 @@ const OrderDetailPage = () => {
         });
     }
   }, [order?.addressId]);
+
+  // Fetch tracking data
+  const fetchTrackingData = async () => {
+    if (!orderId) return;
+    
+    setTrackingLoading(true);
+    setTrackingError(null);
+    
+    try {
+      const response = await apiClient.get(`/orders/${orderId}/track`);
+      setTrackingData(response.data);
+    } catch (err) {
+      console.error('Error fetching tracking:', err);
+      setTrackingError('Tracking error');
+    } finally {
+      setTrackingLoading(false);
+    }
+  };
+
+  // Fetch tracking when modal opens
+  const handleOpenTrackingModal = () => {
+    setShowTrackingModal(true);
+    fetchTrackingData();
+  };
 
   if (loading) {
     return <OrderDetailPageSkeleton />;
@@ -308,7 +336,7 @@ const OrderDetailPage = () => {
                   <h2 className="text-lg font-bold text-slate-900">Tracking</h2>
                 </div>
 
-                {order.trackingNumber ? (
+                { order.trackingNumber ? (
                   <div className="space-y-4">
                     <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
                       <p className="text-xs font-semibold text-slate-500 uppercase mb-1">Tracking Number</p>
@@ -318,7 +346,7 @@ const OrderDetailPage = () => {
                       Agent: <span className="font-semibold text-slate-900">{order.trackingAgent || 'N/A'}</span>
                     </p>
                     <Button
-                      onClick={() => setShowTrackingModal(true)}
+                      onClick={handleOpenTrackingModal}
                       variant="primary"
                       className="w-full"
                     >
@@ -406,55 +434,138 @@ const OrderDetailPage = () => {
 
       {/* Tracking Modal */}
       <Modal isOpen={showTrackingModal} onClose={() => setShowTrackingModal(false)}>
-        <div className="p-8 max-w-md">
-          <div className="mb-6">
-            <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center mb-4">
-              <Truck className="w-6 h-6 text-blue-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-slate-900">Track Your Order</h2>
-            <p className="text-slate-600 mt-2">Tracking #{order.trackingNumber}</p>
-          </div>
-
-          <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
-            <p className="text-sm text-slate-600 mb-4">
-              Real-time tracking information will be available soon. Currently, the tracking API is being integrated.
-            </p>
-            <div className="space-y-3">
-              <div className="p-3 bg-white rounded border border-blue-200">
-                <p className="text-xs font-semibold text-blue-600 uppercase mb-1">Tracking Number</p>
-                <p className="font-mono font-bold text-slate-900">{order.trackingNumber}</p>
+        <div className="p-6 sm:p-8 max-w-lg w-full">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                <Truck className="w-6 h-6 text-white" />
               </div>
-              <div className="p-3 bg-white rounded border border-blue-200">
-                <p className="text-xs font-semibold text-blue-600 uppercase mb-1">Shipping Partner</p>
-                <p className="font-semibold text-slate-900">{order.trackingAgent || 'Delhivery'}</p>
+              <div>
+                <h2 className="text-xl font-bold text-slate-900">Track Shipment</h2>
+                <p className="text-sm text-slate-500">#{order.trackingNumber}</p>
               </div>
             </div>
-          </Card>
-
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-            <div className="flex gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-yellow-800">
-                Tracking information will be updated as your order progresses. Please check back soon.
-              </p>
-            </div>
+            <button
+              onClick={fetchTrackingData}
+              disabled={trackingLoading}
+              className="p-2 rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-50"
+              title="Refresh tracking"
+            >
+              <RefreshCw className={`w-5 h-5 text-slate-600 ${trackingLoading ? 'animate-spin' : ''}`} />
+            </button>
           </div>
 
-          <div className="flex gap-3">
+          {/* Content */}
+          {trackingLoading ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+              <p className="text-slate-600">Fetching tracking details...</p>
+            </div>
+          ) : trackingError ? (
+            <div className="py-8">
+              <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
+                <p className="font-semibold text-red-700 mb-1">Tracking Error</p>
+                <p className="text-sm text-red-600">Unable to fetch tracking details. Please try again later.</p>
+              </div>
+            </div>
+          ) : trackingData ? (
+            <div className="space-y-6">
+              {/* Current Status Card */}
+              <div className={`p-5 rounded-xl border-2 ${
+                trackingData.isDelivered 
+                  ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200' 
+                  : 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200'
+              }`}>
+                <div className="flex items-center gap-3 mb-3">
+                  {trackingData.isDelivered ? (
+                    <CheckCircle2 className="w-8 h-8 text-green-600" />
+                  ) : (
+                    <Truck className="w-8 h-8 text-blue-600" />
+                  )}
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 uppercase">Current Status</p>
+                    <p className={`text-lg font-bold ${
+                      trackingData.isDelivered ? 'text-green-700' : 'text-blue-700'
+                    }`}>
+                      {trackingData.currentStatus?.replace(/_/g, ' ') || 'Processing'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tracking Details */}
+              <div className="space-y-4">
+                {/* Location */}
+                {trackingData.location && (
+                  <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                    <MapPinned className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs font-semibold text-slate-500 uppercase mb-1">Current Location</p>
+                      <p className="font-semibold text-slate-900">{trackingData.location}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Last Update */}
+                {trackingData.lastUpdate && (
+                  <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                    <Clock className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs font-semibold text-slate-500 uppercase mb-1">Last Update</p>
+                      <p className="font-semibold text-slate-900">{trackingData.lastUpdate}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Estimated Delivery */}
+                {trackingData.estimatedDeliveryDate && !trackingData.isDelivered && (
+                  <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                    <Calendar className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs font-semibold text-slate-500 uppercase mb-1">Estimated Delivery</p>
+                      <p className="font-semibold text-slate-900">{trackingData.estimatedDeliveryDate}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Waybill */}
+                <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                  <CircleDot className="w-5 h-5 text-slate-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 uppercase mb-1">Waybill Number</p>
+                    <p className="font-mono font-bold text-slate-900">{trackingData.waybillNumber || order.trackingNumber}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Delivered Badge */}
+              {trackingData.isDelivered && (
+                <div className="bg-green-100 border border-green-300 rounded-xl p-4 flex items-center gap-3">
+                  <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0" />
+                  <div>
+                    <p className="font-bold text-green-800">Package Delivered!</p>
+                    <p className="text-sm text-green-700">Your order has been successfully delivered.</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="py-8 text-center">
+              <Package className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+              <p className="text-slate-500">No tracking data available</p>
+            </div>
+          )}
+
+          {/* Footer */}
+          <div className="mt-6 pt-6 border-t border-slate-200">
             <Button
               onClick={() => setShowTrackingModal(false)}
               variant="outline"
-              className="flex-1"
+              className="w-full"
             >
               Close
-            </Button>
-            <Button
-              variant="primary"
-              className="flex-1"
-              disabled
-            >
-              <Zap className="w-4 h-4 mr-2" />
-              Coming Soon
             </Button>
           </div>
         </div>

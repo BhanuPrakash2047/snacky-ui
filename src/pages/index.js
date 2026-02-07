@@ -12,3 +12,5 @@ export { default as UserProfilePage } from './UserProfilePage';
 export { default as NotificationsPage } from './NotificationsPage';
 export { default as OAuthSuccessPage } from './OAuthSuccessPage';
 export { default as OAuthErrorPage } from './OAuthErrorPage';
+export { default as AdminDashboardPage } from './AdminDashboardPage';
+export { default as ForbiddenPage } from './ForbiddenPage';

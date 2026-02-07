@@ -18,6 +18,8 @@ import {
   NotificationsPage,
   OAuthSuccessPage,
   OAuthErrorPage,
+  AdminDashboardPage,
+  ForbiddenPage,
 } from './pages';
 
 function App() {
@@ -46,6 +48,11 @@ function App() {
           <Route path="/orders/:orderId" element={<OrderDetailPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
+
+          {/* Admin */}
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+          <Route path="/forbidden" element={<ForbiddenPage />} />
 
           {/* 404 - Not Found */}
           <Route
