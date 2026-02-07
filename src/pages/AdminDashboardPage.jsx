@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { Header, Footer } from '@/components/layout';
 import { Button, Card, Badge, Input } from '@/components/common';
+import { AdminDashboardPageSkeleton } from '@/components/skeletons';
 import { fetchAdminStats, markPaymentSuccess, markPaymentFailed } from '@/store/thunks/adminThunks';
 import { clearAdminError } from '@/store/slices/adminSlice';
 import { showToast } from '@/utils/toast';
@@ -208,21 +209,7 @@ const AdminDashboardPage = () => {
   };
 
   if (loading && !stats) {
-    return (
-      <div className="min-h-screen bg-linear-to-b from-orange-50 via-white to-emerald-50 flex flex-col">
-        <Header />
-        <div className="flex-1 flex items-center justify-center pt-18 lg:pt-24">
-          <div className="text-center">
-            <div className="relative w-20 h-20 mb-6 mx-auto">
-              <div className="absolute inset-0 bg-linear-to-r from-orange-400 to-red-400 rounded-full animate-spin opacity-75"></div>
-              <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center text-2xl">📊</div>
-            </div>
-            <p className="text-slate-600 text-lg font-semibold">Loading admin dashboard...</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
+    return <AdminDashboardPageSkeleton />;
   }
 
   return (

@@ -10,3 +10,4 @@ export { OrderTrackingPageSkeleton } from './OrderTrackingPageSkeleton';
 export { OrderDetailPageSkeleton } from './OrderDetailPageSkeleton';
 export { UserProfilePageSkeleton } from './UserProfilePageSkeleton';
 export { NotificationsPageSkeleton } from './NotificationsPageSkeleton';
+export { AdminDashboardPageSkeleton } from './AdminDashboardPageSkeleton';
