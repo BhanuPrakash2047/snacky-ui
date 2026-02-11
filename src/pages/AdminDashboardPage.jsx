@@ -24,7 +24,9 @@ import {
   ArrowDownRight,
   Eye,
   CheckCircle,
-  X
+  X,
+  Download,
+  Archive
 } from 'lucide-react';
 import { Header, Footer } from '@/components/layout';
 import { Button, Card, Badge, Input } from '@/components/common';
@@ -32,6 +34,7 @@ import { AdminDashboardPageSkeleton } from '@/components/skeletons';
 import { fetchAdminStats, markPaymentSuccess, markPaymentFailed } from '@/store/thunks/adminThunks';
 import { clearAdminError } from '@/store/slices/adminSlice';
 import { showToast } from '@/utils/toast';
+import { shippingLabelAPI } from '@/store/api/shippingLabelAPI';
 
 const AdminDashboardPage = () => {
   const navigate = useNavigate();
@@ -48,6 +51,11 @@ const AdminDashboardPage = () => {
 
   // Confirmation modal state
   const [confirmModal, setConfirmModal] = useState({ show: false, type: '', orderId: null, orderNumber: '' });
+
+  // Shipping label download states
+  const [downloadingLabel, setDownloadingLabel] = useState(null); // orderId being downloaded
+  const [batchDownloadLoading, setBatchDownloadLoading] = useState(false);
+  const [previewBatchModal, setPreviewBatchModal] = useState({ show: false, orders: [], loading: false });
 
   // Check admin access
   useEffect(() => {
@@ -128,6 +136,67 @@ const AdminDashboardPage = () => {
     }
     
     setConfirmModal({ show: false, type: '', orderId: null, orderNumber: '' });
+  };
+
+  // Handle single order label download
+  const handleDownloadOrderLabel = async (orderId, orderNumber) => {
+    setDownloadingLabel(orderId);
+    try {
+      const fileBlob = await shippingLabelAPI.downloadOrderLabel(orderId);
+      const filename = `shipping_label_${orderNumber}_${Date.now()}.pdf`;
+      shippingLabelAPI.downloadFile(fileBlob, filename);
+      showToast(`Label downloaded for order ${orderNumber}`, 'success');
+    } catch (error) {
+      let errorMsg = 'Failed to download label';
+      if (error.response?.data?.message) {
+        errorMsg = error.response.data.message;
+      } else if (error.response?.status === 404) {
+        errorMsg = `Order has no shipping label yet`;
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+      showToast(errorMsg, 'error');
+    } finally {
+      setDownloadingLabel(null);
+    }
+  };
+
+  // Preview batch download before downloading
+  const handlePreviewBatchDownload = async () => {
+    setPreviewBatchModal({ ...previewBatchModal, loading: true });
+    try {
+      const response = await shippingLabelAPI.previewBatchLabels(null, 'SHIPPED');
+      setPreviewBatchModal({
+        show: true,
+        orders: response.orders || [],
+        loading: false
+      });
+    } catch (error) {
+      showToast('Failed to preview batch labels', 'error');
+      setPreviewBatchModal({ show: false, orders: [], loading: false });
+    }
+  };
+
+  // Handle batch label download
+  const handleDownloadBatchLabels = async () => {
+    setBatchDownloadLoading(true);
+    try {
+      const fileBlob = await shippingLabelAPI.downloadBatchLabels(null, 'SHIPPED');
+      const filename = `shipping_labels_batch_${Date.now()}.zip`;
+      shippingLabelAPI.downloadFile(fileBlob, filename);
+      showToast(`Downloaded ${previewBatchModal.orders.length} shipping labels`, 'success');
+      setPreviewBatchModal({ show: false, orders: [], loading: false });
+    } catch (error) {
+      let errorMsg = 'Failed to download labels';
+      if (error.response?.data?.message) {
+        errorMsg = error.response.data.message;
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+      showToast(errorMsg, 'error');
+    } finally {
+      setBatchDownloadLoading(false);
+    }
   };
 
   // Filter orders by search term
@@ -544,6 +613,17 @@ const AdminDashboardPage = () => {
                 Clear Filters
               </Button>
             )}
+            <div className="flex-1"></div>
+            {/* Batch Download Labels Button */}
+            <Button
+              onClick={handlePreviewBatchDownload}
+              disabled={batchDownloadLoading || previewBatchModal.loading}
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+              size="sm"
+            >
+              <Archive className="w-4 h-4" />
+              {batchDownloadLoading || previewBatchModal.loading ? 'Preparing...' : 'Download All Labels (ZIP)'}
+            </Button>
           </div>
 
           {/* Orders List */}
@@ -609,6 +689,19 @@ const AdminDashboardPage = () => {
                           </Button>
                         </>
                       )}
+                      {/* Download Label Button - Visible for shipped orders */}
+                      {(order.status === 'SHIPPED' || order.status === 'DELIVERED') && order.trackingNumber && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-blue-600 border-blue-300 hover:bg-blue-50 hover:border-blue-400"
+                          onClick={() => handleDownloadOrderLabel(order.id, order.orderNumber)}
+                          disabled={downloadingLabel === order.id}
+                        >
+                          <Download className="w-4 h-4 mr-1" />
+                          {downloadingLabel === order.id ? 'Getting...' : 'Label'}
+                        </Button>
+                      )}
                       <Button
                         size="sm"
                         variant="ghost"
@@ -650,6 +743,65 @@ const AdminDashboardPage = () => {
             </div>
           </div>
         </section>
+      )}
+
+      {/* BATCH DOWNLOAD PREVIEW MODAL */}
+      {previewBatchModal.show && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-2xl bg-white rounded-lg shadow-2xl animate-bounce-in">
+            <div className="p-6 border-b border-slate-200">
+              <h3 className="text-xl font-bold text-slate-900">Download Shipping Labels</h3>
+              <p className="text-sm text-slate-600 mt-1">Preview of orders to be included in the ZIP archive</p>
+            </div>
+            
+            <div className="p-6 max-h-96 overflow-y-auto">
+              {previewBatchModal.orders.length === 0 ? (
+                <p className="text-center text-slate-500 py-8">No orders found with tracking numbers</p>
+              ) : (
+                <div className="space-y-2">
+                  {previewBatchModal.orders.map((order) => (
+                    <div key={order.id} className="flex items-center justify-between p-3 bg-slate-50 rounded border border-slate-200">
+                      <div className="flex-1">
+                        <p className="font-medium text-slate-900">{order.orderNumber}</p>
+                        <p className="text-xs text-slate-500">Tracking: {order.trackingNumber} | {order.receiverName}</p>
+                      </div>
+                      <Badge variant="primary" size="sm">{formatStatus(order.status)}</Badge>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="p-6 border-t border-slate-200 bg-slate-50">
+              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                <p className="text-sm text-blue-800">
+                  <strong>{previewBatchModal.orders.length}</strong> shipping labels will be downloaded as a single ZIP file.
+                </p>
+              </div>
+              <div className="flex items-center justify-end gap-3">
+                <Button
+                  variant="outline"
+                  onClick={() => setPreviewBatchModal({ show: false, orders: [], loading: false })}
+                  disabled={batchDownloadLoading}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleDownloadBatchLabels}
+                  disabled={batchDownloadLoading || previewBatchModal.orders.length === 0}
+                  className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+                >
+                  {batchDownloadLoading ? (
+                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <Archive className="w-4 h-4 mr-2" />
+                  )}
+                  {batchDownloadLoading ? 'Downloading...' : 'Download ZIP'}
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
 
       {/* CONFIRMATION MODAL */}
